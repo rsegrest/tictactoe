@@ -1,18 +1,23 @@
 import { useState, useEffect } from 'react';
 import io from 'socket.io-client';
 import TictactoeBoard from './components/TictactoeBoard';
-import { connectToGameSvr } from './interface/GameSvrInterface'
+// import { connectToGameSvr } from './interface/GameSvrInterface'
+import { getEmptyBoard } from './interface/GameSvrInterface';
 import './App.css';
 
 const socket = io("http://127.0.0.1:5000")
 
 function App() {
   // connectToGameSvr();
-  const [isConnected, setIsConnected] = useState(socket.connected);
-  const [lastPong, setLastPong] = useState(null);
-  const [username, setUsername] = useState('');
   const [statusMessage, setStatusMessage] = useState('')
+  const [isConnected, setIsConnected] = useState(socket.connected);
   const [thisPlayer, setThisPlayer] = useState(null);
+  const [username, setUsername] = useState('');
+  const [boardState, setBoardState] = useState(getEmptyBoard());
+  const [xPlayer, setXPlayer] = useState(null);
+  const [oPlayer, setOPlayer] = useState(null);
+  const [turn, setTurn] = useState(null);
+
 
   useEffect(() => {
     socket.on('connect', () => {
@@ -25,7 +30,7 @@ function App() {
 
     socket.on('pong', () => {
       console.log('received pong!')
-      setLastPong(new Date().toISOString());
+    //   setLastPong(new Date().toISOString());
     });
 
     socket.on('update_msg', (message) => {
@@ -37,27 +42,59 @@ function App() {
     socket.on('set_player', (message) => {
       console.log('rx set player')
       console.log(message);
-      setThisPlayer(message['side'])
+      const side = message['side'];
+      setThisPlayer(side)
+      if (side === 'X') {
+        setXPlayer(username);
+      } else if (side === 'O') {
+        setOPlayer(username);
+      }
+      
+    })
+
+    socket.on('board_update', (message) => {
+        console.log('rx board update')
+        console.log(message);
+        setBoardState(message['board'])
+    })
+
+    socket.on('change_turn', (message) => {
+        console.log('rx change turn')
+        console.log(message);
+        setTurn(message['turn'])
     })
 
     return () => {
       socket.off('connect');
       socket.off('disconnect');
       socket.off('pong');
+      socket.off('update_msg');
+      socket.off('set_player');
+      socket.off('board_update');
+      socket.off('change_turn');
     };
   }, []);
 
-  const sendPing = () => {
-    socket.emit('ping');
-  }
+//   const sendPing = () => {
+//     socket.emit('ping');
+//   }
   const sendUsername = (username) => {
     socket.emit('set_name', {'name': username})
+  }
+
+  const sendMove = (move) => {
+    console.log('sending move')
+    socket.emit('move', {'move': move})
   }
 
   return (
     <>
       <p>Status Message: {''+ statusMessage}</p>
       <p>Connected: { '' + isConnected }</p>
+      <p>This Player: { '' + thisPlayer }</p>
+      <p>X Player: { '' + xPlayer }</p>
+      <p>O Player: { '' + oPlayer }</p>
+      <p>Current turn: { '' + turn }</p>
       {/* <p>Last pong: { lastPong || '-' }</p> */}
       {!thisPlayer ? (
         <>
@@ -66,9 +103,10 @@ function App() {
         </>
       )
         : null}
-      
-      
-      <TictactoeBoard />
+      <TictactoeBoard
+        sendMove={sendMove}
+        boardState={boardState}
+      />
     </>
     
   );

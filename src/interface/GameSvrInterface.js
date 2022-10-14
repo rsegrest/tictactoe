@@ -37,9 +37,9 @@ export const getTestBoard = () => {
     ];
 }
 
-export const sendMove = () => {
-    throw 'not implemented';
-}
+// export const sendMove = () => {
+//     throw 'not implemented';
+// }
 
 export const receiveMove = () => {
     throw 'not implemented';

@@ -1,14 +1,61 @@
 import XOSpace from "./XOSpace";
-import { getEmptyBoard, getTestBoard } from '../interface/GameSvrInterface'
-const TictactoeBoard = () => {
-    let boardState = getEmptyBoard();
+import {
+  getEmptyBoard,
+  // boardState,
+  // getTestBoard,
+} from '../interface/GameSvrInterface'
+const TictactoeBoard = ({
+  sendMove,
+  boardState,
+}) => {
+    // let boardState = getEmptyBoard();
+    console.log('boardState');
+    console.log(boardState);
     let spacenum = -1;
+    const outputRow = ({
+      row,
+      i,
+      sendMove,
+    }) => {
+      console.log('outputting row ' + row + ', ' + i);
+
+      const returnRow = row.map((col,j) => {
+        spacenum = (i*3) + j;
+        return (
+          // <p>{JSON.stringify(col)}_{spacenum}</p>
+          <XOSpace
+            key={i*3+j}
+            state={boardState[i][j]}
+            spacenum={spacenum}
+            sendMove={(spacenum) => sendMove(spacenum)}
+          />
+        )
+      });
+
+
+      return returnRow;
+    }
     return (
       <div className="App">
         <header className="Centered-Board">
           <table>
             <tbody>
-              <tr>
+              {boardState.map((row,i) => 
+                {
+                  console.log('*outputting row ' + row + ', ' + i);
+                  return (
+                  <tr
+                    key={i}
+                  >
+                    {outputRow({
+                      row,i,sendMove
+                    })}
+                    {/* {JSON.stringify(row)} */}
+                  </tr>)
+                }
+              )
+            }
+              {/* <tr>
                 <XOSpace spacenum={(spacenum += 1)} state={boardState[0][0]} />
                 <XOSpace spacenum={(spacenum += 1)} state={boardState[0][1]} />
                 <XOSpace spacenum={(spacenum += 1)} state={boardState[0][2]} />
@@ -22,7 +69,7 @@ const TictactoeBoard = () => {
                 <XOSpace spacenum={(spacenum += 1)} state={boardState[2][0]} />
                 <XOSpace spacenum={(spacenum += 1)} state={boardState[2][1]} />
                 <XOSpace spacenum={(spacenum += 1)} state={boardState[2][2]} />
-              </tr>
+              </tr> */}
             </tbody>
           </table>
         </header>
