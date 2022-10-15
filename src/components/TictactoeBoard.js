@@ -1,9 +1,4 @@
 import XOSpace from "./XOSpace";
-import {
-  getEmptyBoard,
-  // boardState,
-  // getTestBoard,
-} from '../interface/GameSvrInterface'
 const TictactoeBoard = ({
   sendMove,
   boardState,

@@ -4,6 +4,7 @@ import TictactoeBoard from './components/TictactoeBoard';
 // import { connectToGameSvr } from './interface/GameSvrInterface'
 import { getEmptyBoard } from './interface/GameSvrInterface';
 import './App.css';
+import { SpaceStates } from './constants';
 
 const socket = io("http://127.0.0.1:5000")
 
@@ -22,6 +23,7 @@ function App() {
   useEffect(() => {
     socket.on('connect', () => {
       setIsConnected(true);
+      joinRoom();
     });
 
     socket.on('disconnect', () => {
@@ -44,9 +46,9 @@ function App() {
       console.log(message);
       const side = message['side'];
       setThisPlayer(side)
-      if (side === 'X') {
+      if (side === SpaceStates.X) {
         setXPlayer(username);
-      } else if (side === 'O') {
+      } else if (side === SpaceStates.O) {
         setOPlayer(username);
       }
       
@@ -64,6 +66,11 @@ function App() {
         setTurn(message['turn'])
     })
 
+    socket.on('my_response', (message) => {
+        console.log('rx my response')
+        console.log(message);
+    })
+
     return () => {
       socket.off('connect');
       socket.off('disconnect');
@@ -72,6 +79,7 @@ function App() {
       socket.off('set_player');
       socket.off('board_update');
       socket.off('change_turn');
+      socket.off('my_response');
     };
   }, []);
 
@@ -86,6 +94,9 @@ function App() {
     console.log('sending move')
     socket.emit('move', {'move': move})
   }
+  const joinRoom = () => {
+    socket.emit('join', {'room': 'tictactoe'})
+  }
 
   return (
     <>
@@ -99,7 +110,8 @@ function App() {
       {!thisPlayer ? (
         <>
           <input id="username_field" onChange={(e) => setUsername(e.target.value)} />
-          <button onClick={() => sendUsername(username)}>Send username</button>
+          <button onClick={() => sendUsername(username)}>Send username</button><br />
+          <button onClick={() => joinRoom()}>Join room</button>
         </>
       )
         : null}
