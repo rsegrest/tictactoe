@@ -23,7 +23,7 @@ function App() {
   useEffect(() => {
     socket.on('connect', () => {
       setIsConnected(true);
-      joinRoom();
+      joinRoom(); // do this here or somewhere else?
     });
 
     socket.on('disconnect', () => {
