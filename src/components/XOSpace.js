@@ -7,6 +7,9 @@ const XOSpace = ({
 }) => {
     let rendering = '';
     let clName = "space";
+    if (state === 'X') { rendering = 'X'; }
+    if (state === 'O') { rendering = 'O'; }
+
     if (state === SpaceStates.X) { rendering = 'X'; }
     if (state === SpaceStates.O) { rendering = 'O'; }
 
