@@ -17,11 +17,14 @@ function App() {
   const [xPlayer, setXPlayer] = useState(null);
   const [oPlayer, setOPlayer] = useState(null);
   const [turn, setTurn] = useState(null);
+  const [room, setRoom] = useState(null);
 
 
   useEffect(() => {
     socket.on('connect', () => {
       setIsConnected(true);
+      console.log('joining room')
+      joinRoom()
     });
 
     socket.on('disconnect', () => {
@@ -82,6 +85,19 @@ function App() {
     socket.emit('set_name', {'name': username})
   }
 
+  const joinRoom = (
+    // room = 'default'
+  ) => {
+    console.log('sending join room message')
+    // socket.emit('join_room', {'room': 'tictactoe'})
+    // join_room(message['room'])
+    // session['receive_count'] = session.get('receive_count', 0) + 1
+    // emit('my_response',
+    //      {'data': 'In rooms: ' + ', '.join(rooms()),
+    //       'count': session['receive_count']})
+
+  }
+
   const sendMove = (move) => {
     console.log('sending move')
     socket.emit('move', {'move': move})
@@ -100,6 +116,7 @@ function App() {
         <>
           <input id="username_field" onChange={(e) => setUsername(e.target.value)} />
           <button onClick={() => sendUsername(username)}>Send username</button>
+          <button onClick={() => joinRoom()}>Join Room</button>
         </>
       )
         : null}
