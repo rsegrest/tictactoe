@@ -89,7 +89,8 @@ const DebugDisplay = ({
                                 </td>
                             </tr>
                         </>
-                    ) : (
+                    ) : null}
+                    {/* (
                         <tr
                             className="Debug-Output-Row"
                         >
@@ -97,7 +98,7 @@ const DebugDisplay = ({
                                 <button onClick={() => startGame()}>Start Game</button>
                             </td>
                         </tr>
-                    )}
+                    ) */}
                 </tbody>
             </table>
         </div>

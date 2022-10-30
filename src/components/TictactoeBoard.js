@@ -34,7 +34,7 @@ const TictactoeBoard = ({
 
           <table
             style={{
-              width: '100%',
+              width: '100vh',
               marginLeft: '1rem',
               marginRight: '1rem',
             }}

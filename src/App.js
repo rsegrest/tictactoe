@@ -5,7 +5,7 @@ import TictactoeBoard from './components/TictactoeBoard';
 import { getEmptyBoard } from './interface/GameSvrInterface';
 import './App.css';
 import DebugDisplay  from './components/debug/DebugDisplay';
-import { SpaceStates } from './constants';
+import { SpaceStates, GameStates } from './constants';
 
 const socket = io("http://127.0.0.1:5000")
 
@@ -23,6 +23,8 @@ function App() {
   const [myId, setMyId] = useState(null);
   const [gameStatus, setGameStatus] = useState(null);
 
+  console.log('xPlayer: ' + xPlayer);
+  console.log('oPlayer: ' + oPlayer);
 
   useEffect(() => {
     socket.on('connect', () => {
@@ -50,14 +52,28 @@ function App() {
       console.log(message);
       const id = message['id'];
       const side = message['side'];
-      setMySide(side)
-      setMyId(id)
-      if (side === SpaceStates.X) {
-        setXPlayer(username);
-      } else if (side === SpaceStates.O) {
-        setOPlayer(username);
+      const thisUser = message['username'];
+      console.log('side: ' + side);
+      console.log('thisUser : ' + thisUser);
+      // console.log('username: ' + username);
+      // setMySide(side)
+      // setMyId(id)
+      // TODO: Use SpaceStates instead of 'X' and 'O'
+      if (side === 'X') {
+        console.log('setting xPlayer')
+        setXPlayer(thisUser);
+        if (thisUser === username) {
+          setMySide('X');
+          setMyId(id)
+        }
+      } else if (side === 'O') {
+        console.log('setting oPlayer')
+        setOPlayer(thisUser);
+        if (thisUser === username) {
+          setMySide('O');
+          setMyId(id)
+        }
       }
-      
     })
 
     socket.on('board_update', (message) => {
@@ -86,8 +102,21 @@ function App() {
     socket.on('update_game_status', (message) => {
         console.log('rx update game status')
         console.log(message);
+        const gameStatus = message['status'];
         setGameStatus(message['status'])
+        if (gameStatus === 'X_WON') {
+            setStatusMessage('X won!')
+        } else if (gameStatus === 'O_WON') {
+            setStatusMessage('O won!')
+        } else if (gameStatus === 'DRAW') {
+            setStatusMessage('CATS Game!')
+        } else if (gameStatus === 'X_TURN') {
+            setStatusMessage('X\'s turn')
+        } else if (gameStatus === 'O_TURN') {
+            setStatusMessage('O\'s turn')
+        }
     })
+    // NO LONGER NEEDED
     socket.on('ack_start_game', (message) => {
       console.log('rx update game status')
       console.log(message);
@@ -107,7 +136,7 @@ function App() {
       socket.off('update_game_status');
       socket.off('ack_start_game');
     };
-  }, []);
+  }, [username]);
 
 //   const sendPing = () => {
 //     socket.emit('ping');
@@ -165,7 +194,7 @@ function App() {
                 </td>
                 <td
                   style={{
-                    width: '84vw'
+                    width: '50vh'
                   }}
                 >
                   <TictactoeBoard
