@@ -23,6 +23,11 @@ const XOSpace = ({
     return (
         <td
             className={clName}
+            style={{
+                width: '33vh',
+                height: '33vh',
+                fontSize: '28vh',
+            }}
             onClick={() => {
                 console.log("clicked space " + spacenum);
                 sendMove(spacenum);

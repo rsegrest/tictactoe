@@ -1,3 +1,5 @@
+import { GameStates } from "../../constants";
+
 const DebugDisplay = ({
     statusMessage,
     isConnected,
@@ -11,7 +13,7 @@ const DebugDisplay = ({
     setUsername,
     sendUsername,
     joinRoom,
-    // startGame,
+    startGame,
 }) => {
     console.log('username: ' + username)
     return (
@@ -90,6 +92,21 @@ const DebugDisplay = ({
                             </tr>
                         </>
                     ) : null}
+                    {
+                        (
+                            gameStatus === GameStates.DRAW
+                            || gameStatus === GameStates.X_WON
+                            || gameStatus === GameStates.O_WON
+                        ) ? (
+                            <tr
+                                className="Debug-Output-Row"
+                            >
+                                <td>
+                                    <button onClick={() => startGame()}>Restart Game</button><br />
+                                </td>
+                            </tr>
+                        ) : null
+                    }
                 </tbody>
             </table>
         </div>

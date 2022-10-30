@@ -1,7 +1,6 @@
 import { useState, useEffect } from 'react';
 import io from 'socket.io-client';
 import TictactoeBoard from './components/TictactoeBoard';
-// import { connectToGameSvr } from './interface/GameSvrInterface'
 import { getEmptyBoard } from './interface/GameSvrInterface';
 import './App.css';
 import DebugDisplay  from './components/debug/DebugDisplay';
@@ -10,10 +9,8 @@ import { SpaceStates, GameStates } from './constants';
 const socket = io("http://127.0.0.1:5000")
 
 function App() {
-  // connectToGameSvr();
   const [statusMessage, setStatusMessage] = useState('')
   const [isConnected, setIsConnected] = useState(socket.connected);
-  // const [thisPlayer, setThisPlayer] = useState(null);
   const [username, setUsername] = useState('');
   const [boardState, setBoardState] = useState(getEmptyBoard());
   const [xPlayer, setXPlayer] = useState(null);
@@ -23,8 +20,8 @@ function App() {
   const [myId, setMyId] = useState(null);
   const [gameStatus, setGameStatus] = useState(null);
 
-  console.log('xPlayer: ' + xPlayer);
-  console.log('oPlayer: ' + oPlayer);
+  // console.log('xPlayer: ' + xPlayer);
+  // console.log('oPlayer: ' + oPlayer);
 
   useEffect(() => {
     socket.on('connect', () => {
@@ -55,22 +52,18 @@ function App() {
       const thisUser = message['username'];
       console.log('side: ' + side);
       console.log('thisUser : ' + thisUser);
-      // console.log('username: ' + username);
-      // setMySide(side)
-      // setMyId(id)
-      // TODO: Use SpaceStates instead of 'X' and 'O'
-      if (side === 'X') {
+      if (side === SpaceStates.X) {
         console.log('setting xPlayer')
         setXPlayer(thisUser);
         if (thisUser === username) {
-          setMySide('X');
+          setMySide(SpaceStates.X);
           setMyId(id)
         }
-      } else if (side === 'O') {
+      } else if (side === SpaceStates.O) {
         console.log('setting oPlayer')
         setOPlayer(thisUser);
         if (thisUser === username) {
-          setMySide('O');
+          setMySide(SpaceStates.O);
           setMyId(id)
         }
       }
@@ -105,18 +98,18 @@ function App() {
         console.log(message);
         const gameStatus = message['status'];
         setGameStatus(message['status'])
-        if (gameStatus === 'X_WON') {
+        if (gameStatus === GameStates.X_WON) {
             setStatusMessage('X won!')
-        } else if (gameStatus === 'O_WON') {
+        } else if (gameStatus === GameStates.O_WON) {
             setStatusMessage('O won!')
-        } else if (gameStatus === 'DRAW') {
+        } else if (gameStatus === GameStates.DRAW) {
             setStatusMessage('CATS Game!')
-        } else if (gameStatus === 'X_TURN') {
+        } else if (gameStatus === GameStates.X_TURN) {
             setStatusMessage('X\'s turn')
-            setTurn('X')
-        } else if (gameStatus === 'O_TURN') {
+            setTurn(SpaceStates.X)
+        } else if (gameStatus === GameStates.O_TURN) {
             setStatusMessage('O\'s turn')
-            setTurn('O')
+            setTurn(SpaceStates.O)
         }
     })
     // NO LONGER NEEDED
@@ -208,9 +201,7 @@ function App() {
               </tr>
             </tbody>
           </table>
-          
-          
-          </header>
+        </header>
       </div>
     </>
     
