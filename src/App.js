@@ -82,6 +82,7 @@ function App() {
         setBoardState(message['board'])
     })
 
+    // NOT USED?
     socket.on('change_turn', (message) => {
         console.log('rx change turn')
         console.log(message);
@@ -112,8 +113,10 @@ function App() {
             setStatusMessage('CATS Game!')
         } else if (gameStatus === 'X_TURN') {
             setStatusMessage('X\'s turn')
+            setTurn('X')
         } else if (gameStatus === 'O_TURN') {
             setStatusMessage('O\'s turn')
+            setTurn('O')
         }
     })
     // NO LONGER NEEDED

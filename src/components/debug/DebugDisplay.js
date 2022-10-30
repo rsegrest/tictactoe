@@ -11,7 +11,7 @@ const DebugDisplay = ({
     setUsername,
     sendUsername,
     joinRoom,
-    startGame,
+    // startGame,
 }) => {
     console.log('username: ' + username)
     return (
@@ -90,15 +90,6 @@ const DebugDisplay = ({
                             </tr>
                         </>
                     ) : null}
-                    {/* (
-                        <tr
-                            className="Debug-Output-Row"
-                        >
-                            <td>
-                                <button onClick={() => startGame()}>Start Game</button>
-                            </td>
-                        </tr>
-                    ) */}
                 </tbody>
             </table>
         </div>
