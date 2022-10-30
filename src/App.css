@@ -47,6 +47,19 @@ td {
   font-size: 12rem;
   font-weight: bold;
 }
+.Debug-Output-Table {
+  height: 1.1rem;
+  width: 15vw;
+}
+.Debug-Output-Row > tr {
+  height: 1.1rem;
+}
+.Debug-Output-Row > td {
+  font-size: 1rem;
+  font-weight: normal;
+  height: 1.1rem;
+  border: 1px solid white;
+}
 .space {
   width: 33%;
   height: 25%;

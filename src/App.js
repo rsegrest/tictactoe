@@ -4,6 +4,7 @@ import TictactoeBoard from './components/TictactoeBoard';
 // import { connectToGameSvr } from './interface/GameSvrInterface'
 import { getEmptyBoard } from './interface/GameSvrInterface';
 import './App.css';
+import DebugDisplay  from './components/debug/DebugDisplay';
 import { SpaceStates } from './constants';
 
 const socket = io("http://127.0.0.1:5000")
@@ -112,6 +113,7 @@ function App() {
 //     socket.emit('ping');
 //   }
   const sendUsername = (username) => {
+    console.log('sending username : ' + username)
     socket.emit('player_username', {'name': username})
   }
 
@@ -131,27 +133,53 @@ function App() {
 
   return (
     <>
-      <p>Status Message: {''+ statusMessage}</p>
-      <p>Connected: { '' + isConnected }</p>
-      <p>This Player's Side: { '' + mySide }</p>
-      <p>This Player's ID: { '' + myId }</p>
-      <p>X Player: { '' + xPlayer }</p>
-      <p>O Player: { '' + oPlayer }</p>
-      <p>Current turn: { '' + turn }</p>
-      <p>Game Status: { '' + gameStatus }</p>
-      {/* <p>Last pong: { lastPong || '-' }</p> */}
-      {!mySide ? (
-        <>
-          <input id="username_field" onChange={(e) => setUsername(e.target.value)} />
-          <button onClick={() => sendUsername(username)}>Send username</button><br />
-          <button onClick={() => joinRoom()}>Join room</button>
-        </>
-      )
-        : <button onClick={() => startGame()}>Start Game</button>}
-      <TictactoeBoard
-        sendMove={sendMove}
-        boardState={boardState}
-      />
+      <div className="App">
+        <header className="Centered-Board">
+          <table
+            style={{
+              width: '100vw'
+            }}
+          >
+            <tbody>
+              <tr>
+                <td
+                  style={{
+                    width: '15vw'
+                  }}
+                >
+                  <DebugDisplay
+                    statusMessage={statusMessage}
+                    isConnected={isConnected}
+                    mySide={mySide}
+                    myId={myId}
+                    xPlayer={xPlayer}
+                    oPlayer={oPlayer}
+                    turn={turn}
+                    gameStatus={gameStatus}
+                    username={username}
+                    setUsername={setUsername}
+                    sendUsername={sendUsername}
+                    joinRoom={joinRoom}
+                    startGame={startGame}
+                  />
+                </td>
+                <td
+                  style={{
+                    width: '84vw'
+                  }}
+                >
+                  <TictactoeBoard
+                    sendMove={sendMove}
+                    boardState={boardState}
+                  />
+                </td>
+              </tr>
+            </tbody>
+          </table>
+          
+          
+          </header>
+      </div>
     </>
     
   );

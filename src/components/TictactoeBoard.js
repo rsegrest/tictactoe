@@ -31,9 +31,14 @@ const TictactoeBoard = ({
       return returnRow;
     }
     return (
-      <div className="App">
-        <header className="Centered-Board">
-          <table>
+
+          <table
+            style={{
+              width: '100%',
+              marginLeft: '1rem',
+              marginRight: '1rem',
+            }}
+          >
             <tbody>
               {boardState.map((row,i) => 
                 {
@@ -67,8 +72,8 @@ const TictactoeBoard = ({
               </tr> */}
             </tbody>
           </table>
-        </header>
-      </div>
+      //   </header>
+      // </div>
     )
   }
 export default TictactoeBoard;
