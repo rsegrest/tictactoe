@@ -1,9 +1,11 @@
 import { SpaceStates } from "./constants";
 // import { sendMove } from "../interface/GameSvrInterface";
-const XOSpace = ({
-    state = SpaceStates.X,
+const C4Space = ({
+    state = SpaceStates.EMPTY,
+    row,
+    column,
     space,
-    // sendMove,
+    sendMove,
 }) => {
     let rendering = '';
     let clName = "space";
@@ -31,11 +33,11 @@ const XOSpace = ({
             }}
             onClick={() => {
                 console.log("clicked space " + space);
-                // sendMove(spacenum);
+                sendMove(column);
             }}
         >
             {rendering}
         </td>
     )
 }
-export default XOSpace;
+export default C4Space;

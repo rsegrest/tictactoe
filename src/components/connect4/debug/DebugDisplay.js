@@ -6,8 +6,8 @@ const DebugDisplay = ({
     username,
     mySide,
     myId,
-    xPlayer,
-    oPlayer,
+    blackPlayer,
+    redPlayer,
     turn,
     gameStatus,
     setUsername,
@@ -16,6 +16,7 @@ const DebugDisplay = ({
     startGame,
 }) => {
     console.log('username: ' + username)
+    console.log('myside : ' + mySide)
     return (
         <div className="Debug-Display">
             <table
@@ -49,12 +50,12 @@ const DebugDisplay = ({
                     <tr
                         className="Debug-Output-Row"
                     >
-                        <td>X Player: { '' + xPlayer }</td>
+                        <td>Black Player: { '' + blackPlayer }</td>
                     </tr>
                     <tr
                         className="Debug-Output-Row"
                     >
-                        <td>O Player: { '' + oPlayer }</td>
+                        <td>Red Player: { '' + redPlayer }</td>
                     </tr>
                     <tr
                         className="Debug-Output-Row"
@@ -95,8 +96,8 @@ const DebugDisplay = ({
                     {
                         (
                             gameStatus === GameStates.DRAW
-                            || gameStatus === GameStates.X_WON
-                            || gameStatus === GameStates.O_WON
+                            || gameStatus === GameStates.B_WON
+                            || gameStatus === GameStates.R_WON
                         ) ? (
                             <tr
                                 className="Debug-Output-Row"

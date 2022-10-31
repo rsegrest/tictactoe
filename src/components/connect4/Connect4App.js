@@ -11,7 +11,7 @@ import {
   NUM_COLS
 } from './constants';
 
-// const socket = io("http://127.0.0.1:5000")
+const socket = io("http://127.0.0.1:5000/connectfour")
 
   
 function App() {
@@ -29,7 +29,7 @@ function App() {
     return buildBoardState;
   }
   const [statusMessage, setStatusMessage] = useState('')
-  // const [isConnected, setIsConnected] = useState(socket.connected);
+  const [isConnected, setIsConnected] = useState(socket.connected);
   const [username, setUsername] = useState('');
   const [boardState, setBoardState] = useState(getEmptyBoard());
   const [blackPlayer, setBlackPlayer] = useState(null);
@@ -43,140 +43,155 @@ function App() {
   // console.log('oPlayer: ' + oPlayer);
 
   // TODO: MOVE THIS TO SEPARATE FILE
-  // useEffect(() => {
-  //   socket.on('connect', () => {
-  //     setIsConnected(true);
-  //     joinRoom(); // do this here or somewhere else?
-  //   });
+  useEffect(() => {
+    socket.on('connect', () => {
+      setIsConnected(true);
+      joinRoom(); // do this here or somewhere else?
+    });
 
-  //   socket.on('disconnect', () => {
-  //     setIsConnected(false);
-  //   });
+    socket.on('disconnect', () => {
+      setIsConnected(false);
+    });
 
-  //   socket.on('pong', () => {
-  //     console.log('received pong!')
-  //   //   setLastPong(new Date().toISOString());
-  //   });
+    socket.on('pong', () => {
+      console.log('received pong!')
+    //   setLastPong(new Date().toISOString());
+    });
 
-  //   socket.on('update_msg', (message) => {
-  //     console.log('received message update')
-  //     console.log(message)
-  //     setStatusMessage(message['msg'])
-  //   })
+    socket.on('update_msg', (message) => {
+      console.log('received message update')
+      console.log(message)
+      setStatusMessage(message['msg'])
+    })
 
-  //   socket.on('ack_player_username', (message) => {
-  //     console.log('rx set player')
-  //     console.log(message);
-  //     const id = message['id'];
-  //     const side = message['side'];
-  //     const thisUser = message['username'];
-  //     console.log('side: ' + side);
-  //     console.log('thisUser : ' + thisUser);
-  //     if (side === SpaceStates.B) {
-  //       console.log('setting blackPlayer')
-  //       setBlackPlayer(thisUser);
-  //       if (thisUser === username) {
-  //         setMySide(SpaceStates.B);
-  //         setMyId(id)
-  //       }
-  //     } else if (side === SpaceStates.R) {
-  //       console.log('setting redPlayer')
-  //       setRedPlayer(thisUser);
-  //       if (thisUser === username) {
-  //         setMySide(SpaceStates.R);
-  //         setMyId(id)
-  //       }
-  //     }
-  //   })
+    socket.on('ack_player_username', (message) => {
+      console.log('rx set player - c4')
+      console.log(message);
+      const id = message['id'];
+      const side = message['side'];
+      const thisUser = message['username'];
+      console.log('side: ' + side);
+      console.log('thisUser : ' + thisUser);
+      console.log('username: ' + username);
+      if (side === 'B') {
+        console.log('setting blackPlayer')
+        setBlackPlayer(thisUser);
+        if (thisUser === username) {
+          console.log('setting mySide to Black')
+          setMySide(SpaceStates.BLACK);
+          // setMySide('B')
+          setMyId(id)
+        }
+      } else if (side === 'R') {
+        console.log('setting redPlayer')
+        setRedPlayer(thisUser);
+        if (thisUser === username) {
+          console.log('setting mySide to Red')
+          setMySide(SpaceStates.RED);
+          // setMySide('R')
+          setMyId(id)
+        }
+      }
+      console.log('After setting player:')
+      console.log('blackPlayer: ' + blackPlayer);
+      console.log('redPlayer: ' + redPlayer);
+      console.log('mySide: ' + mySide);
+      console.log('myId: ' + myId);
 
-  //   socket.on('board_update', (message) => {
-  //       console.log('rx board update')
-  //       console.log(message);
-  //       setBoardState(message['board'])
-  //   })
+    })
 
-  //   // NOT USED?
-  //   socket.on('change_turn', (message) => {
-  //       console.log('rx change turn')
-  //       console.log(message);
-  //       setTurn(message['turn'])
-  //   })
+    socket.on('board_update', (message) => {
+        console.log('rx board update')
+        console.log(message);
+        setBoardState(message['board'])
+    })
 
-  //   socket.on('my_response', (message) => {
-  //       console.log('rx my response')
-  //       console.log(message);
-  //   })
+    // NOT USED?
+    // socket.on('change_turn', (message) => {
+    //     console.log('rx change turn')
+    //     console.log(message);
+    //     setTurn(message['turn'])
+    // })
 
-  //   socket.on('update_board', (message) => {
-  //       console.log('rx update board')
-  //       console.log(message);
-  //       setBoardState(message['board'])
-  //   })
+    socket.on('my_response', (message) => {
+        console.log('rx my response')
+        console.log(message);
+    })
 
-  //   socket.on('update_game_status', (message) => {
-  //       console.log('rx update game status')
-  //       console.log(message);
-  //       const gameStatus = message['status'];
-  //       setGameStatus(message['status'])
-  //       if (gameStatus === GameStates.B_WON) {
-  //           setStatusMessage('BLACK won!')
-  //       } else if (gameStatus === GameStates.R_WON) {
-  //           setStatusMessage('RED won!')
-  //       } else if (gameStatus === GameStates.DRAW) {
-  //           setStatusMessage('CATS Game!')
-  //       } else if (gameStatus === GameStates.B_TURN) {
-  //           setStatusMessage('BLACK\'s turn')
-  //           setTurn(SpaceStates.B)
-  //       } else if (gameStatus === GameStates.R_TURN) {
-  //           setStatusMessage('RED\'s turn')
-  //           setTurn(SpaceStates.R)
-  //       }
-  //   })
-  //   // NO LONGER NEEDED
-  //   socket.on('ack_start_game', (message) => {
-  //     console.log('rx update game status')
-  //     console.log(message);
-  //     setGameStatus(message['starting_game'])
-  // })
+    socket.on('update_board', (message) => {
+        console.log('rx update board')
+        console.log(message);
+        setBoardState(message['board'])
+    })
 
-  //   return () => {
-  //     socket.off('connect');
-  //     socket.off('disconnect');
-  //     socket.off('pong');
-  //     socket.off('update_msg');
-  //     socket.off('ack_player_username');
-  //     socket.off('board_update');
-  //     socket.off('change_turn');
-  //     socket.off('my_response');
-  //     socket.off('update_board');
-  //     socket.off('update_game_status');
-  //     socket.off('ack_start_game');
-  //   };
-  // }, [username]);
+    socket.on('update_game_status', (message) => {
+        console.log('rx update game status')
+        console.log(message);
+        const gameStatus = message['status'];
+        console.log('gamestatus: ' + gameStatus);
+        setGameStatus(message['status'])
+        if (gameStatus === GameStates.B_WON) {
+            setStatusMessage('BLACK won!')
+        } else if (gameStatus === GameStates.R_WON) {
+            setStatusMessage('RED won!')
+        } else if (gameStatus === GameStates.DRAW) {
+            setStatusMessage('CATS Game!')
+        } else if (gameStatus === GameStates.B_TURN) {
+            setStatusMessage('BLACK\'s turn')
+            setTurn(SpaceStates.B)
+        } else if (gameStatus === GameStates.R_TURN) {
+            setStatusMessage('RED\'s turn')
+            setTurn(SpaceStates.R)
+        }
+    })
+    // NO LONGER NEEDED
+    socket.on('ack_start_game', (message) => {
+      console.log('rx update game status')
+      console.log(message);
+      setGameStatus(message['starting_game'])
+  })
+
+    return () => {
+      socket.off('connect');
+      socket.off('disconnect');
+      socket.off('pong');
+      socket.off('update_msg');
+      socket.off('ack_player_username');
+      socket.off('board_update');
+      socket.off('change_turn');
+      socket.off('my_response');
+      socket.off('update_board');
+      socket.off('update_game_status');
+      socket.off('ack_start_game');
+    };
+  }, [username, blackPlayer, redPlayer, mySide, myId, gameStatus]);
   
 
-  // //const sendPing = () => {
-  // //  socket.emit('ping');
-  // // }
-  // const sendUsername = (username) => {
-  //   console.log('sending username : ' + username)
-  //   socket.emit('player_username', {'name': username})
+  //const sendPing = () => {
+  //  socket.emit('ping');
   // }
+  const sendUsername = (username) => {
+    console.log('sending username : ' + username)
+    socket.emit('player_username', {'name': username})
+  }
 
-  // // space is [r,c]
-  // const sendMove = (space) => {
-  //   console.log('sending move')
-  //   socket.emit('player_move', {
-  //     'side': mySide, 'space': space
-  //   })
-  // }
-  // const joinRoom = () => {
-  //   socket.emit('join', {'room': 'connect4'})
-  // }
+  // space is [r,c]
+  const sendMove = (column) => {
+    console.log('sending move:')
+    console.log('mySide: ' + mySide)
+    console.log('column: ' + column)
+    socket.emit('player_move', {
+      'side': mySide, 'column': column
+    })
+  }
 
-  // const startGame = () => {
-  //   socket.emit('start_game', {'room': 'connect4'})
-  // }
+  const joinRoom = () => {
+    socket.emit('join', {'room': 'connect4'})
+  }
+
+  const startGame = () => {
+    socket.emit('start_game', {'room': 'connect4'})
+  }
   // END MOVE THIS TO SEPARATE FILE
 
   // [
@@ -206,7 +221,7 @@ function App() {
                 >
                   <DebugDisplay
                     statusMessage={statusMessage}
-                    // isConnected={isConnected}
+                    isConnected={isConnected}
                     mySide={mySide}
                     myId={myId}
                     blackPlayer={blackPlayer}
@@ -215,9 +230,9 @@ function App() {
                     gameStatus={gameStatus}
                     username={username}
                     setUsername={setUsername}
-                    // sendUsername={sendUsername}
-                    // joinRoom={joinRoom}
-                    // startGame={startGame}
+                    sendUsername={sendUsername}
+                    joinRoom={joinRoom}
+                    startGame={startGame}
                   />
                 </td>
                 <td
@@ -226,7 +241,7 @@ function App() {
                   }}
                 >
                   <C4Board
-                    // sendMove={sendMove}
+                    sendMove={sendMove}
                     boardState={boardState}
                   />
                 </td>

@@ -25,10 +25,10 @@ const C4Board = ({
           <C4Space
             key={'r'+i+'-c'+j}
             state={boardState[i][j]}
-            rownum={i}
-            colnum={j}
+            row={i}
+            column={j}
             space={space}
-            // sendMove={(space) => sendMove(space)}
+            sendMove={sendMove}
           />
         )
       });
