@@ -1,20 +1,39 @@
 import { useState, useEffect } from 'react';
 import io from 'socket.io-client';
-import TictactoeBoard from './TictactoeBoard';
-import { getEmptyBoard } from '../../interface/GameSvrInterface';
-import './App.css';
+import C4Board from './components/C4Board';
+// import { getEmptyBoard } from './interface/GameSvrInterface';
+import './styles/App.css';
 import DebugDisplay  from './debug/DebugDisplay';
-import { SpaceStates, GameStates } from './constants';
+import {
+  SpaceStates,
+  GameStates,
+  NUM_ROWS,
+  NUM_COLS
+} from './constants/index';
 
-const socket = io("http://127.0.0.1:5000")
+const socket = io("http://127.0.0.1:5000/connectfour")
 
-function App() {
+  
+function ConnectFourApp() {
+
+  const getEmptyBoard = () => {
+    let buildBoardState = [];
+    for (let i = 0; i < NUM_ROWS; i++) {
+      let rowArray = [];
+      for (let j = 0; j < NUM_COLS; j++) {
+        rowArray.push(SpaceStates.EMPTY);
+      }
+      buildBoardState.push(rowArray);
+    }
+    // setBoardState(buildBoardState);
+    return buildBoardState;
+  }
   const [statusMessage, setStatusMessage] = useState('')
   const [isConnected, setIsConnected] = useState(socket.connected);
   const [username, setUsername] = useState('');
   const [boardState, setBoardState] = useState(getEmptyBoard());
-  const [xPlayer, setXPlayer] = useState(null);
-  const [oPlayer, setOPlayer] = useState(null);
+  const [blackPlayer, setBlackPlayer] = useState(null);
+  const [redPlayer, setRedPlayer] = useState(null);
   const [turn, setTurn] = useState(null);
   const [mySide, setMySide] = useState(null);
   const [myId, setMyId] = useState(null);
@@ -23,6 +42,7 @@ function App() {
   // console.log('xPlayer: ' + xPlayer);
   // console.log('oPlayer: ' + oPlayer);
 
+  // TODO: MOVE THIS TO SEPARATE FILE
   useEffect(() => {
     socket.on('connect', () => {
       setIsConnected(true);
@@ -45,28 +65,39 @@ function App() {
     })
 
     socket.on('ack_player_username', (message) => {
-      console.log('rx set player')
+      console.log('rx set player - c4')
       console.log(message);
       const id = message['id'];
       const side = message['side'];
       const thisUser = message['username'];
       console.log('side: ' + side);
       console.log('thisUser : ' + thisUser);
-      if (side === SpaceStates.X) {
-        console.log('setting xPlayer')
-        setXPlayer(thisUser);
+      console.log('username: ' + username);
+      if (side === 'B') {
+        console.log('setting blackPlayer')
+        setBlackPlayer(thisUser);
         if (thisUser === username) {
-          setMySide(SpaceStates.X);
+          console.log('setting mySide to Black')
+          setMySide(SpaceStates.BLACK);
+          // setMySide('B')
           setMyId(id)
         }
-      } else if (side === SpaceStates.O) {
-        console.log('setting oPlayer')
-        setOPlayer(thisUser);
+      } else if (side === 'R') {
+        console.log('setting redPlayer')
+        setRedPlayer(thisUser);
         if (thisUser === username) {
-          setMySide(SpaceStates.O);
+          console.log('setting mySide to Red')
+          setMySide(SpaceStates.RED);
+          // setMySide('R')
           setMyId(id)
         }
       }
+      console.log('After setting player:')
+      console.log('blackPlayer: ' + blackPlayer);
+      console.log('redPlayer: ' + redPlayer);
+      console.log('mySide: ' + mySide);
+      console.log('myId: ' + myId);
+
     })
 
     socket.on('board_update', (message) => {
@@ -76,11 +107,11 @@ function App() {
     })
 
     // NOT USED?
-    socket.on('change_turn', (message) => {
-        console.log('rx change turn')
-        console.log(message);
-        setTurn(message['turn'])
-    })
+    // socket.on('change_turn', (message) => {
+    //     console.log('rx change turn')
+    //     console.log(message);
+    //     setTurn(message['turn'])
+    // })
 
     socket.on('my_response', (message) => {
         console.log('rx my response')
@@ -97,19 +128,20 @@ function App() {
         console.log('rx update game status')
         console.log(message);
         const gameStatus = message['status'];
+        console.log('gamestatus: ' + gameStatus);
         setGameStatus(message['status'])
-        if (gameStatus === GameStates.X_WON) {
-            setStatusMessage('X won!')
-        } else if (gameStatus === GameStates.O_WON) {
-            setStatusMessage('O won!')
+        if (gameStatus === GameStates.B_WON) {
+            setStatusMessage('BLACK won!')
+        } else if (gameStatus === GameStates.R_WON) {
+            setStatusMessage('RED won!')
         } else if (gameStatus === GameStates.DRAW) {
             setStatusMessage('CATS Game!')
-        } else if (gameStatus === GameStates.X_TURN) {
-            setStatusMessage('X\'s turn')
-            setTurn(SpaceStates.X)
-        } else if (gameStatus === GameStates.O_TURN) {
-            setStatusMessage('O\'s turn')
-            setTurn(SpaceStates.O)
+        } else if (gameStatus === GameStates.B_TURN) {
+            setStatusMessage('BLACK\'s turn')
+            setTurn(SpaceStates.B)
+        } else if (gameStatus === GameStates.R_TURN) {
+            setStatusMessage('RED\'s turn')
+            setTurn(SpaceStates.R)
         }
     })
     // NO LONGER NEEDED
@@ -132,30 +164,45 @@ function App() {
       socket.off('update_game_status');
       socket.off('ack_start_game');
     };
-  }, [username]);
+  }, [username, blackPlayer, redPlayer, mySide, myId, gameStatus]);
+  
 
-//   const sendPing = () => {
-//     socket.emit('ping');
-//   }
+  //const sendPing = () => {
+  //  socket.emit('ping');
+  // }
   const sendUsername = (username) => {
     console.log('sending username : ' + username)
     socket.emit('player_username', {'name': username})
   }
 
-  const sendMove = (spacenum) => {
-    console.log('sending move')
+  // space is [r,c]
+  const sendMove = (column) => {
+    console.log('sending move:')
+    console.log('mySide: ' + mySide)
+    console.log('column: ' + column)
     socket.emit('player_move', {
-      'side': mySide, 'spacenum': spacenum
+      'side': mySide, 'column': column
     })
   }
+
   const joinRoom = () => {
-    socket.emit('join', {'room': 'tictactoe'})
+    socket.emit('join', {'room': 'connect4'})
   }
 
   const startGame = () => {
-    socket.emit('start_game', {'room': 'tictactoe'})
+    socket.emit('start_game', {'room': 'connect4'})
   }
+  // END MOVE THIS TO SEPARATE FILE
 
+  // [
+  //   [SpaceStates.EMPTY, SpaceStates.EMPTY, SpaceStates.EMPTY, SpaceStates.EMPTY, SpaceStates.EMPTY, SpaceStates.EMPTY, SpaceStates.EMPTY ],
+  //   [SpaceStates.EMPTY, SpaceStates.EMPTY, SpaceStates.EMPTY, SpaceStates.EMPTY, SpaceStates.EMPTY, SpaceStates.EMPTY, SpaceStates.EMPTY ],
+  //   [SpaceStates.EMPTY, SpaceStates.EMPTY, SpaceStates.EMPTY, SpaceStates.EMPTY, SpaceStates.EMPTY, SpaceStates.EMPTY, SpaceStates.EMPTY ],
+  //   [SpaceStates.EMPTY, SpaceStates.EMPTY, SpaceStates.EMPTY, SpaceStates.EMPTY, SpaceStates.EMPTY, SpaceStates.EMPTY, SpaceStates.EMPTY ],
+  //   [SpaceStates.EMPTY, SpaceStates.EMPTY, SpaceStates.EMPTY, SpaceStates.EMPTY, SpaceStates.EMPTY, SpaceStates.EMPTY, SpaceStates.EMPTY ],
+  //   [SpaceStates.EMPTY, SpaceStates.EMPTY, SpaceStates.EMPTY, SpaceStates.EMPTY, SpaceStates.EMPTY, SpaceStates.EMPTY, SpaceStates.EMPTY ],
+  //   [SpaceStates.EMPTY, SpaceStates.EMPTY, SpaceStates.EMPTY, SpaceStates.EMPTY, SpaceStates.EMPTY, SpaceStates.EMPTY, SpaceStates.EMPTY ],
+  // ]
   return (
     <>
       <div className="App">
@@ -177,8 +224,8 @@ function App() {
                     isConnected={isConnected}
                     mySide={mySide}
                     myId={myId}
-                    xPlayer={xPlayer}
-                    oPlayer={oPlayer}
+                    blackPlayer={blackPlayer}
+                    redPlayer={redPlayer}
                     turn={turn}
                     gameStatus={gameStatus}
                     username={username}
@@ -193,7 +240,7 @@ function App() {
                     width: '50vh'
                   }}
                 >
-                  <TictactoeBoard
+                  <C4Board
                     sendMove={sendMove}
                     boardState={boardState}
                   />
@@ -208,4 +255,4 @@ function App() {
   );
 }
 
-export default App;
+export default ConnectFourApp;

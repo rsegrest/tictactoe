@@ -6,9 +6,9 @@ import Container from 'react-bootstrap/Container';
 // import Col from 'react-bootstrap/Col';
 import "bootstrap/dist/css/bootstrap.min.css";
 
-import MessageSlate from './MessageSlate';
-import UserListDisplay from './UserListDisplay';
-import GameListDisplay from './GamesListDisplay';
+import MessageSlate from './components/MessageSlate';
+import UserListDisplay from './components/UserListDisplay';
+import GameListDisplay from './components/GamesListDisplay';
 // import { getEmptyBoard } from './interface/GameSvrInterface';
 // import './App.css';
 // import './custom.scss';

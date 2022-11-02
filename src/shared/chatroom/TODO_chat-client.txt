@@ -1,0 +1,37 @@
+CLIENT:
+TODO: Re-implement message listeners
+TODO: Test message listeners
+TODO: Add game ID, players to game list display component
+TODO: Improve user list display?
+
+SERVER:
+TODO: Create chat server
+
+STYLING:
+TODO: Style user and game list displays
+TODO: Style message row
+TODO: Style message entry field
+
+REARCHITECT:
+  CLIENT:
+    src/
+      shared/
+        styles/
+        
+        chatroom/
+            components/
+            interface/
+            ChatRoomApp.jsx
+        general/
+            components/
+            interface/
+            Main.jsx?/
+      games/
+        tictactoe/
+            components/
+            interface/
+            TicTacToeApp.jsx
+        connectfour/
+            components/
+            interface/
+            ConnectFourApp.jsx

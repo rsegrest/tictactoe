@@ -1,5 +1,5 @@
-import { SpaceStates } from "./constants";
-// import { sendMove } from "../interface/GameSvrInterface";
+import { SpaceStates } from "../constants/index";
+
 const C4Space = ({
     state = SpaceStates.EMPTY,
     row,

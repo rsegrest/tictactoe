@@ -4,13 +4,16 @@ import './index.css';
 // import App from './App';
 import reportWebVitals from './reportWebVitals';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import ChatRoomApp from './components/chatroom/ChatRoomApp';
+import ChatRoomApp from './shared/chatroom/ChatRoomApp';
+import ConnectFourApp from './games/connectfour/ConnectFourApp';
+import TictactoeApp from './games/tictactoe/TictactoeApp';
+
 
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
-    <ChatRoomApp />
+    <ConnectFourApp />
   </React.StrictMode>
 );
 

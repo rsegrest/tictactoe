@@ -1,6 +1,6 @@
 
 import { io } from "socket.io-client";
-import { SpaceStates } from "../components/tictactoe/constants"
+import { SpaceStates } from "../tictactoe/constants/index"
 
 export const connectToGameSvr = () => {
     const socket = io("ws://127.0.0.1", {

@@ -1,4 +1,4 @@
-import { GameStates } from "../../constants";
+import { GameStates } from "../constants/index.js";
 
 const DebugDisplay = ({
     statusMessage,
