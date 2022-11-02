@@ -1,7 +1,8 @@
 import { useState, useEffect } from 'react';
 // import io from 'socket.io-client';
-import Connect4App from './components/connect4/Connect4App';
+// import Connect4App from './components/connect4/Connect4App';
 import './App.css';
+import ChatRoomApp from './components/chatroom/ChatRoomApp';
 // import DebugDisplay  from './components/connect4/DebugDisplay';
 // import { SpaceStates, GameStates } from './components/tictactoe/constants';
 
@@ -9,7 +10,8 @@ import './App.css';
 
 function App() {
   return (
-    <Connect4App />
+    // <Connect4App />
+    <ChatRoomApp />
   )
 }
 

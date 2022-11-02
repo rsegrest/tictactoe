@@ -13,7 +13,8 @@ export const connectToGameSvr = () => {
         }
     });
     if (!socket) {
-        throw('socket not connected');
+        const err = Error('Socket not connected');
+    throw(err);
     } else {
         console.log('socket connected');
     }
@@ -42,9 +43,11 @@ export const getTestBoard = () => {
 // }
 
 export const receiveMove = () => {
-    throw 'not implemented';
+    const err = Error('not implemented');
+    throw(err);
 }
 
 export const getGameStatus = () => {
-    throw 'not implemented';
+    const err = Error('not implemented');
+    throw(err);
 }
