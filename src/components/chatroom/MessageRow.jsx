@@ -1,18 +1,32 @@
-// import { SpaceStates } from "./constants";
+import Row from 'react-bootstrap/Row';
+import Col from 'react-bootstrap/Col';
 
 const MessageRow = ({
-    id,
-    username,
-    message,
-    color,
+    message
 }) => {
+    const {
+        id,
+        username,
+        content,
+        nameBackgroundColor,
+        messageBackgroundColor
+    } = message;
     return (
-        <div className="message-row">
-            <div className="message-username" style={{ color }}>
-                {username}
-            </div>
-            <div className="message-text">{message}</div>
-        </div>
+        <Row className="message-row">
+            <Col
+                style={{ backgroundColor: nameBackgroundColor}}
+                className="message-username"
+            >
+                {username} ({id})
+            </Col>
+            <Col
+                xs={10}
+                style={{ backgroundColor: messageBackgroundColor }}
+                className="message-text"
+            >
+                {content}
+            </Col>
+        </Row>
     );
 }
 export default MessageRow;

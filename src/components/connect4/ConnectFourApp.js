@@ -14,7 +14,7 @@ import {
 const socket = io("http://127.0.0.1:5000/connectfour")
 
   
-function App() {
+function ConnectFourApp() {
 
   const getEmptyBoard = () => {
     let buildBoardState = [];
@@ -255,4 +255,4 @@ function App() {
   );
 }
 
-export default App;
+export default ConnectFourApp;

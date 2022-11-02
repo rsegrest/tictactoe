@@ -1,18 +1,19 @@
 import { useState, useEffect } from 'react';
 import io from 'socket.io-client';
-import Button from 'react-bootstrap/Button';
+// import Button from 'react-bootstrap/Button';
 import Container from 'react-bootstrap/Container';
-import Row from 'react-bootstrap/Row';
-import Col from 'react-bootstrap/Col';
+// import Row from 'react-bootstrap/Row';
+// import Col from 'react-bootstrap/Col';
 import "bootstrap/dist/css/bootstrap.min.css";
 
 import MessageSlate from './MessageSlate';
 import UserListDisplay from './UserListDisplay';
+import GameListDisplay from './GamesListDisplay';
 // import { getEmptyBoard } from './interface/GameSvrInterface';
 // import './App.css';
 // import './custom.scss';
 // import '../../App.scss';
-import DebugDisplay  from './debug/DebugDisplay';
+// import DebugDisplay  from './debug/DebugDisplay';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './App.css';
 
@@ -22,7 +23,16 @@ import './App.css';
   
 function ChatRoomApp() {
   return (
-      <MessageSlate />
+    <>
+      <div style={{ display: 'flex', flexDirection: 'row' }}>
+        <UserListDisplay />
+        <MessageSlate />
+        <GameListDisplay />
+      </div>
+      {/* <Container className="chatroom-app">
+        
+      </Container> */}
+    </>
   )
 }
 

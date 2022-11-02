@@ -2,8 +2,8 @@ import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 
-const UserListDisplay = ({
-    users = ['Rick', 'Morty', 'Summer', 'Beth', 'Jerry'],
+const GameListDisplay = ({
+    games = ['BlackJack', 'Connect Four', 'Keno', 'Roulette', 'Texas Hold\'em'],
 }) => {
     // const { users } = useContext(ChatContext);
     return (
@@ -12,14 +12,14 @@ const UserListDisplay = ({
                 fontSize: '1.2em',
                 width: '12vw',
             }}
-            className="user-list"
+            className="game-list"
         >
-        {users.map((user) => (
-            <Row key={user} className="user">
-                <Col>{user}</Col>
+        {games.map((game) => (
+            <Row key={game} className="user">
+                <Col>{game}</Col>
             </Row>
         ))}
         </Container>
-    );
+    )
 }
-export default UserListDisplay;
+export default GameListDisplay;

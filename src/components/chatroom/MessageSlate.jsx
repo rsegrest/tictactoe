@@ -9,6 +9,13 @@ import MessageEntryField from './MessageEntryField';
 const MessageSlate = ({
   messages,
 }) => {
+  const message = {
+    id: 123,
+    username: 'tricky',
+    content: 'hey now',
+    nameBackgroundColor: 'taupe',
+    messageBackgroundColor: 'pink',
+  }
   return (
     <Container>
       {/* <Row xs={2} md={4} lg={6}>
@@ -21,6 +28,7 @@ const MessageSlate = ({
         <Col>2 of 3</Col>
         <Col>3 of 3</Col>
       </Row> */}
+      <MessageRow message={message} />
       <MessageEntryField />
     </Container>
   );
