@@ -20,9 +20,9 @@ class SendMessages {
         this.socket.emit('join', {'room': 'tictactoe'})
     }
     
-    startGame = () => {
-        this.socket.emit('start_game', {'room': 'tictactoe'})
-    }
+    // startGame = () => {
+    //     this.socket.emit('start_game', {'room': 'tictactoe'})
+    // }
 }
 
 export default SendMessages;

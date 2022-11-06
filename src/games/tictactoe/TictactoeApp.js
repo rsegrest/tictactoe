@@ -5,12 +5,12 @@ import io from 'socket.io-client';
 import MessageListeners from './interface/MessageListeners';
 import SendMessages from './interface/SendMessages';
 
-import TictactoeNavbar from '../../shared/GameNavbar';
+import GameNavbar from '../../shared/GameNavbar';
 import TictactoeBoard from './components/TictactoeBoard';
 
 import { getEmptyBoard } from '../interface/GameSvrInterface';
 // import './styles/App.css';
-import DebugDisplay  from './debug/DebugDisplay';
+// import DebugDisplay  from './debug/DebugDisplay';
 
 
 const socket = io("http://127.0.0.1:5000", {
@@ -33,10 +33,6 @@ function App() {
   const [myId, setMyId] = useState(null);
   const [gameStatus, setGameStatus] = useState(null);
 
-  // console.log('xPlayer: ' + xPlayer);
-  // console.log('oPlayer: ' + oPlayer);
-  
-
   const send = new SendMessages({
     socket,
     mySide,
@@ -44,7 +40,7 @@ function App() {
   const joinRoom = send.joinRoom;
   const sendUsername = send.sendUsername;
   const sendMove = send.sendMove;
-  const startGame = send.startGame;
+  // const startGame = send.startGame;
 
   // const listen = 
   MessageListeners({
@@ -62,16 +58,10 @@ function App() {
     setMyId,
   });
 
-
-//   const sendPing = () => {
-//     socket.emit('ping');
-//   }
-  
-
   return (
     <>
       <div className="App">
-      <TictactoeNavbar
+      <GameNavbar
         username={username}
         setUsername={setUsername}
         sendUsername={sendUsername}
@@ -88,27 +78,6 @@ function App() {
           >
             <tbody>
               <tr>
-                {/* <td
-                  style={{
-                    width: '15vw'
-                  }}
-                >
-                  <DebugDisplay
-                    statusMessage={statusMessage}
-                    isConnected={isConnected}
-                    mySide={mySide}
-                    myId={myId}
-                    xPlayer={xPlayer}
-                    oPlayer={oPlayer}
-                    turn={turn}
-                    gameStatus={gameStatus}
-                    username={username}
-                    setUsername={setUsername}
-                    sendUsername={sendUsername}
-                    joinRoom={joinRoom}
-                    startGame={startGame}
-                  />
-                </td> */}
                 <td
                   style={{
                     width: '50vh',

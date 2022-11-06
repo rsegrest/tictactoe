@@ -1,4 +1,5 @@
-
+TODO: Improve chat display
+TODO: Click on a game to navigate to that game
 
 DONE
 ====
