@@ -26,16 +26,16 @@ const DebugDisplay = ({
                         height: '1.1rem',
                     }}
                 >
-                    <tr
+                    {/* <tr
                         className="Debug-Output-Row"
                     >
                         <td>Status Message: {''+ statusMessage}</td>
-                    </tr>
-                    <tr
+                    </tr> */}
+                    {/* <tr
                         className="Debug-Output-Row"
                     >
                         <td>Connected: { '' + isConnected }</td>
-                    </tr>
+                    </tr> */}
                     <tr
                         className="Debug-Output-Row"
                     >
@@ -67,7 +67,7 @@ const DebugDisplay = ({
                         <td>Game Status: { '' + gameStatus }</td>
                     </tr>
 
-                    {!mySide ? (
+                    {/* {!mySide ? (
                         <>
                             <tr
                                 className="Debug-Output-Row"
@@ -76,7 +76,7 @@ const DebugDisplay = ({
                                     <input id="username_field" onChange={(e) => setUsername(e.target.value)} />
                                 </td>
                             </tr>
-                            <tr
+                            {/* <tr
                                 className="Debug-Output-Row"
                             >
                                 <td>
@@ -89,9 +89,9 @@ const DebugDisplay = ({
                                 <td>
                                     <button onClick={() => joinRoom()}>Join Room</button><br />
                                 </td>
-                            </tr>
+                            </tr> 
                         </>
-                    ) : null}
+                    ) : null} */}
                     {
                         (
                             gameStatus === GameStates.DRAW

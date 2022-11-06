@@ -37,6 +37,7 @@ const TictactoeBoard = ({
               width: '100vh',
               marginLeft: '1rem',
               marginRight: '1rem',
+              marginTop: '3rem',
             }}
           >
             <tbody>

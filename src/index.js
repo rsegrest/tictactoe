@@ -13,7 +13,8 @@ import TictactoeApp from './games/tictactoe/TictactoeApp';
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
-    <ConnectFourApp />
+    {/* <ConnectFourApp /> */}
+    <TictactoeApp />
   </React.StrictMode>
 );
 
