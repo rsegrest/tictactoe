@@ -1,5 +1,5 @@
 import { GameStates } from '../constants'
-
+import Button from 'react-bootstrap/esm/Button'
 const DebugDisplay = ({
     statusMessage,
     isConnected,
@@ -103,7 +103,14 @@ const DebugDisplay = ({
                                 className="Debug-Output-Row"
                             >
                                 <td>
-                                    <button onClick={() => startGame()}>Restart Game</button><br />
+                                    <Button
+                                        onClick={
+                                            () => startGame()
+                                        }
+                                    >
+                                        Restart Game
+                                    </Button>
+                                    <br />
                                 </td>
                             </tr>
                         ) : null

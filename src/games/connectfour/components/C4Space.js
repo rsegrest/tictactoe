@@ -26,7 +26,9 @@ const C4Space = ({
         <td
             className={clName}
             style={{
-                border: '1px solid white',
+                backgroundColor: '#228',
+                // borderLeft: '1px solid white',
+                // borderRight: '1px solid white',
                 width: '14vh',
                 height: '14vh',
                 fontSize: '12vh',
@@ -36,7 +38,26 @@ const C4Space = ({
                 sendMove(column);
             }}
         >
-            {rendering}
+            
+            {rendering === '' ? (
+                <div style={{
+                    color: 'black',
+                    height: '12vh',
+                    width: '12vh',
+                    backgroundColor: '#222',
+                    borderRadius: '50%',
+                    margin: 'auto',
+                    display: 'inlineBlock',
+                }} />
+            ) : (
+                <div style={{
+                    height: '12vh',
+                    width: '12vh',
+                    marginLeft: 'auto',
+                    marginRight: 'auto',
+                    marginTop: '-3rem',
+                }}>{rendering}</div>
+            )}
         </td>
     )
 }
