@@ -1,5 +1,6 @@
 import { SpaceStates } from "../constants";
 // import { sendMove } from "../interface/GameSvrInterface";
+import '../styles/App.css';
 const XOSpace = ({
     state = SpaceStates.X,
     spacenum,

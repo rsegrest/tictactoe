@@ -3,13 +3,16 @@ import Navbar from 'react-bootstrap/Navbar';
 import Container from 'react-bootstrap/Container';
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
-const TictactoeNavbar = ({
+import Badge from 'react-bootstrap/Badge';
+const GameNavbar = ({
+    gameName = "Tic-Tac-Toe",
     statusMessage = 'Status Message',
     isConnected = false,
     username,
     setUsername,
     sendUsername,
-    mySide,
+    playerInfo,
+    gameRoom = 'THE_GAME_ROOM',
 }) => {
     let statusColor = '#f00';
     if (isConnected) {
@@ -41,7 +44,21 @@ const TictactoeNavbar = ({
                         marginRight: '1rem',
                         display: 'inline-block',
                     }} />
-                    Rick Tac Toe
+                    <span
+                        style={{
+                            marginRight: '2rem',
+                            fontWeight: 'bold',
+                        }}
+                    >{gameName}</span>
+                    <span
+                        style={{
+                            color: '#88f',
+                            marginRight: '1rem',
+                        }}
+                    >
+                        Game Room:
+                    </span>
+                    <Badge bg="primary">{gameRoom}</Badge>
                    
                 </Navbar.Brand>
                 <div
@@ -72,12 +89,12 @@ const TictactoeNavbar = ({
                         display: 'inline-block',
                         float: 'right',
                         justifyContent: 'right',
-                        width: '40rem',
+                        width: '50rem',
                         height: '3rem',
                         // border: '1px solid blue'
                     }}
                 >
-                    {!mySide ? (
+                    {!playerInfo ? (
                         <Form
                             style={{
                                 display: 'inline',
@@ -110,4 +127,4 @@ const TictactoeNavbar = ({
         </Navbar>
     )
 }
-export default TictactoeNavbar;
+export default GameNavbar;

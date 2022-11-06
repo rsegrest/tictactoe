@@ -5,7 +5,7 @@ import io from 'socket.io-client';
 import MessageListeners from './interface/MessageListeners';
 import SendMessages from './interface/SendMessages';
 
-import TictactoeNavbar from './components/TictactoeNavbar';
+import TictactoeNavbar from '../../shared/GameNavbar';
 import TictactoeBoard from './components/TictactoeBoard';
 
 import { getEmptyBoard } from '../interface/GameSvrInterface';
@@ -77,17 +77,18 @@ function App() {
         sendUsername={sendUsername}
         isConnected={isConnected}
         statusMessage={statusMessage}
-        mySide={mySide}
+        playerInfo={mySide}
       />
         <header className="Centered-Board">
           <table
             style={{
-              width: '100vw'
+              width: '100vw',
+              backgroundColor: 'black',
             }}
           >
             <tbody>
               <tr>
-                <td
+                {/* <td
                   style={{
                     width: '15vw'
                   }}
@@ -107,7 +108,7 @@ function App() {
                     joinRoom={joinRoom}
                     startGame={startGame}
                   />
-                </td>
+                </td> */}
                 <td
                   style={{
                     width: '50vh',
