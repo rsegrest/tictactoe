@@ -1,5 +1,6 @@
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
+import Badge from 'react-bootstrap/esm/Badge';
 
 const MessageRow = ({
     message
@@ -17,7 +18,10 @@ const MessageRow = ({
                 style={{ backgroundColor: nameBackgroundColor}}
                 className="message-username"
             >
-                {username} ({id})
+                <Badge>
+                    {username} ({id})
+                </Badge>
+                
             </Col>
             <Col
                 xs={10}

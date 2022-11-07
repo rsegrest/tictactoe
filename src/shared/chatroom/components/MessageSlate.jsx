@@ -6,6 +6,10 @@ import Button from 'react-bootstrap/Button';
 import MessageRow from "./MessageRow";
 import MessageEntryField from './MessageEntryField';
 
+import "@fontsource/cabin/400.css"
+import 'bootstrap/dist/css/bootstrap.min.css';
+import '../chatroom.css';
+
 const MessageSlate = ({
   messages,
 }) => {

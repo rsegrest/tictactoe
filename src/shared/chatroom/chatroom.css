@@ -1,3 +1,16 @@
 td {
     font-size: 1rem;
 }
+
+.message-row {
+    height: 2.2rem;
+    border: 1px solid gray;
+    border-radius: 5px;
+    font-family: "Cabin", sans-serif;
+}
+.message-username {
+    width: 5rem;
+}
+.message-text {
+    font-family: "Cabin", sans-serif;
+}

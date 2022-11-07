@@ -15,6 +15,7 @@ import GameListDisplay from './components/GamesListDisplay';
 // import './custom.scss';
 // import '../../App.scss';
 // import DebugDisplay  from './debug/DebugDisplay';
+import "@fontsource/cabin/400.css"
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './chatroom.css';
 

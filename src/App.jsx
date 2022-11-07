@@ -4,6 +4,7 @@ import ChatRoomApp from './shared/chatroom/ChatRoomApp';
 import ConnectFourApp from './games/connectfour/ConnectFourApp';
 import TictactoeApp from './games/tictactoe/TictactoeApp';
 import RoomTypes from './shared/constants/RoomTypes';
+import MessageSlate from './shared/chatroom/components/MessageSlate';
 
 const App = () => {
     const [roomType, setRoomType] = useState(RoomTypes.CHAT_ROOM);
@@ -22,7 +23,8 @@ const App = () => {
     // const room = renderRoom();
     if (roomType === RoomTypes.CHAT_ROOM) {
         return (
-            <ChatRoomApp />
+            // <ChatRoomApp />
+            <MessageSlate />
         );
     } else if (roomType === RoomTypes.CONNECT_FOUR) {
         return (
