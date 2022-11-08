@@ -4,9 +4,27 @@ td {
 
 .message-row {
     height: 2.2rem;
+    margin-left: 10rem;
     border: 1px solid gray;
     border-radius: 5px;
     font-family: "Cabin", sans-serif;
+    display: 'inline-block';
+    border-radius: '1rem';
+    width: '90%';
+}
+.my-message-row {
+    height: 2.2rem;
+    margin-right: 10rem;
+    border: 1px solid gray;
+    border-radius: 5px;
+    font-family: "Cabin", sans-serif;
+    display: 'inline-block';
+    border-radius: '1rem';
+    width: '90%';
+}
+.cabin-bold {
+    font-family: "Cabin", sans-serif;
+    font-weight: 800;
 }
 .message-username {
     width: 5rem;

@@ -11,43 +11,57 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import '../chatroom.css';
 
 const MessageSlate = ({
-  messages,
+  // messages,
 }) => {
   const message = {
     id: 123,
     username: 'tricky',
     content: 'hey now',
-    nameBackgroundColor: 'taupe',
-    messageBackgroundColor: 'pink',
   }
+  const msg2 = {
+    id: 124,
+    username: 'lara',
+    content: 'hey now',
+  }
+  const msg3 = {
+    id: 125,
+    username: 'charlotte',
+    content: 'hey now',
+  }
+  const msg4 = {
+    id: 126,
+    username: 'livvy',
+    content: '',
+  }
+  const msg5 = {
+    id: 127,
+    username: 'John Isaac',
+    content: 'I love Haddoween',
+  }
+  const msg6 = {
+    id: 128,
+    username: 'Rufus',
+    content: 'roo roo roo',
+  }
+  const messages = [message, msg2, msg3, msg4, msg5, msg6]
   return (
-    <Container>
-      {/* <Row xs={2} md={4} lg={6}>
-        <Button>Test Bootstrap Again</Button>
-        <Col>1 of 2</Col>
-        <Col>2 of 2</Col>
-      </Row>
-      <Row xs={1} md={2}>
-        <Col>1 of 3</Col>
-        <Col>2 of 3</Col>
-        <Col>3 of 3</Col>
-      </Row> */}
-      <MessageRow message={message} />
+    <Container
+      style={{
+        border: '1px solid lightgray',
+        marginTop: '1rem',
+        paddingTop: '1rem',
+        borderRadius: '0.7rem',
+      }}
+    >
+      {messages.map((message) => (
+        <MessageRow
+          key={message.id}
+          message={message}
+          thisUser={'tricky'}
+        />
+      ))}
       <MessageEntryField />
     </Container>
   );
-  // return (
-  //   <div className="message-slate">
-  //     {messages.map((message) => (
-  //       <MessageRow
-  //         key={message.id}
-  //         id={message.id}
-  //         username={message.username}
-  //         message={message.message}
-  //         color={message.color}
-  //       />
-  //     ))}
-  //   </div>
-  // );
 }
 export default MessageSlate;
