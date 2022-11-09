@@ -17,8 +17,7 @@ import GameListDisplay from './components/GamesListDisplay';
 // import DebugDisplay  from './debug/DebugDisplay';
 import "@fontsource/cabin/400.css"
 import 'bootstrap/dist/css/bootstrap.min.css';
-import './chatroom.css';
-
+import '../chatroom.css';
 
 // const socket = io("http://127.0.0.1:5000/chatroom")
 

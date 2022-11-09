@@ -6,9 +6,13 @@ import TictactoeApp from './games/tictactoe/TictactoeApp';
 import RoomTypes from './shared/constants/RoomTypes';
 import MessageSlate from './shared/chatroom/components/MessageSlate';
 import GameCard from './shared/chatroom/components/GameCard';
+import LogInScreen from './shared/login/LogInScreen';
 
 const App = () => {
-    const [roomType, setRoomType] = useState(RoomTypes.CHAT_ROOM);
+    const [
+        roomType,
+        setRoomType
+    ] = useState(RoomTypes.CHAT_ROOM);
     // const renderRoom = () => {
     //     switch (roomType) {
     //         case RoomTypes.CHAT_ROOM:
@@ -26,7 +30,8 @@ const App = () => {
         return (
             // <ChatRoomApp />
             // <MessageSlate />
-            <GameCard />
+            // <GameCard />
+            <LogInScreen />
         );
     } else if (roomType === RoomTypes.CONNECT_FOUR) {
         return (

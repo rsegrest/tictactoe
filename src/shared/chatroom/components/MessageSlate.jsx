@@ -8,7 +8,7 @@ import MessageEntryField from './MessageEntryField';
 
 import "@fontsource/cabin/400.css"
 import 'bootstrap/dist/css/bootstrap.min.css';
-import '../chatroom.css';
+import '../../chatroom.css';
 
 const MessageSlate = ({
   // messages,
