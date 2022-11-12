@@ -1,6 +1,45 @@
 import { useEffect } from 'react';
 // import { SpaceStates, GameStates } from './constants';
 
+const getMessagesFromJSON = (json) => {
+    // console.log('RX messages');
+    // console.log('args');
+    // console.log(json);
+    const messageArray = json[0].messages;
+    console.log('messageArray, length:')
+    console.log(messageArray);
+    console.log(messageArray.length);
+    const returnArray = [];
+    for (let i = 0; i < messageArray.length; i++) {
+        console.log('looping ' + i);
+        const formattedMessage = messageArray[i].replaceAll("'", '"');
+        console.log('formattedMessage:');
+        console.log(formattedMessage)
+        const parsedMessage = JSON.parse(formattedMessage);
+        console.log(parsedMessage)
+        returnArray.push({
+            userId: parsedMessage.user_id,
+            userName: parsedMessage.user_name,
+            content: parsedMessage.content,
+            timestamp: parsedMessage.timestamp,
+        })
+    }
+    // const formattedMessage = messageArray[0].replaceAll("'", '"');
+    // const parsedMessage = JSON.parse(formattedMessage);
+    // // console.log('messages:')
+    // // console.log(JSON.stringify(args[0].messages));
+    // console.log('messages[0]: (user_id, user_name, content, timestamp)')
+    // // const msgString = args[0].messages[0];
+    // // console.log('msgString:');
+    // // console.log(msgString);
+    // // console.log(typeof msgString);
+    // console.log(parsedMessage['user_id']);
+    // console.log(parsedMessage['user_name']);
+    // console.log(parsedMessage['content']);
+    // console.log(parsedMessage['timestamp']);
+    return returnArray;
+}
+
 const MessageListeners = ({
     socket,
     setIsConnected,
@@ -46,19 +85,43 @@ const MessageListeners = ({
         // console.log('***RX ANY');
         // console.log(eventName, args);
         if (eventName === 'messages') {
-            console.log('RX messages');
-            console.log('args');
-            console.log(JSON.parse(args[0]));
-            const messageListJson = JSON.parse(args[0]);
-            console.log('parsed messages');
+            console.log('processing messages from server...')
+            const messages = getMessagesFromJSON(args);
+            console.log('...completed processing')
+            console.log('messages:')
+            setRoomMessages(messages);
+            // console.log('RX messages');
+            // console.log('args');
+            // console.log(args);
+            // const messageArray = args[0].messages;
+            // const formattedMessage = messageArray[0].replaceAll("'", '"');
+            // const parsedMessage = JSON.parse(formattedMessage);
+            // // console.log('messages:')
+            // // console.log(JSON.stringify(args[0].messages));
+            // console.log('messages[0]: (user_id, user_name, content, timestamp)')
+            // // const msgString = args[0].messages[0];
+            // // console.log('msgString:');
+            // // console.log(msgString);
+            // // console.log(typeof msgString);
+            // console.log(parsedMessage['user_id']);
+            // console.log(parsedMessage['user_name']);
+            // console.log(parsedMessage['content']);
+            // console.log(parsedMessage['timestamp']);
+            
+            // const messageListJson = JSON.parse(args[0]);
+            // console.log('parsed messages');
             // console.log(messageListJson.messages);
-            const messageListLength = messageListJson.messages.length;
-            console.log(`messageListLength: ${messageListLength}`);
-            for (let i = 0; i < messageListLength; i++) {
-                const aMessage = messageListJson.messages[i];
-                console.log(`message ${i}: ${aMessage}`);
-            }
-            setRoomMessages(args[0]);
+
+
+            // const messageListLength = messageListJson.messages.length;
+            // console.log(`messageListLength: ${messageListLength}`);
+            // for (let i = 0; i < messageListLength; i++) {
+            //     const aMessage = messageListJson.messages[i];
+            //     console.log(`message ${i}: ${aMessage}`);
+            // }
+            // setRoomMessages(args[0]);
+
+
         }
       });
 
@@ -164,6 +227,6 @@ const MessageListeners = ({
     //   socket.off('update_game_status');
     //   socket.off('ack_start_game');
     };
-  }, [joinRoom, setIsConnected, socket]);
+  }, [joinRoom, setIsConnected, setRoomMessages, socket]);
 };
 export default MessageListeners;

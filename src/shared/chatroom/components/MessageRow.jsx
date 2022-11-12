@@ -5,14 +5,15 @@ const MessageRow = ({
     thisUser
 }) => {
     const {
-        id,
-        username,
+        userId,
+        userName,
         content,
+        timestamp,
     } = message;
     let backgroundImage = 'linear-gradient(#eef, #ddf)';
     let border = '2px solid white';
     let msgclass = "message-row"
-    if (username === thisUser) {
+    if (userName === thisUser) {
         backgroundImage = 'linear-gradient(#fee, #fdd)';
         border = '2px solid gold';
         msgclass = "my-message-row"
@@ -39,11 +40,11 @@ const MessageRow = ({
                         backgroundColor: 'white !important',
                     }}
                 >
-                    {username} ({id})
+                    {userName} ({userId})
                 </Badge>
                 
             </div>
-            <span>{content}</span>
+            <span>{content}</span>&nbsp;&nbsp;<span style={{ color: 'lightgray'}}>{timestamp}</span>
 
         </div>
     );
