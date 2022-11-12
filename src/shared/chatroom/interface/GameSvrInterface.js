@@ -19,35 +19,3 @@ export const connectToGameSvr = () => {
         console.log('socket connected');
     }
 }
-
-
-
-export const getEmptyBoard = () => {
-    return [
-        [SpaceStates.EMPTY, SpaceStates.EMPTY, SpaceStates.EMPTY],
-        [SpaceStates.EMPTY, SpaceStates.EMPTY, SpaceStates.EMPTY],
-        [SpaceStates.EMPTY, SpaceStates.EMPTY, SpaceStates.EMPTY],
-    ];
-}
-
-export const getTestBoard = () => {
-    return [
-        [SpaceStates.X, SpaceStates.O, SpaceStates.X],
-        [SpaceStates.X, SpaceStates.O, SpaceStates.O],
-        [SpaceStates.X, SpaceStates.O, SpaceStates.X],
-    ];
-}
-
-// export const sendMove = () => {
-//     throw 'not implemented';
-// }
-
-export const receiveMove = () => {
-    const err = Error('not implemented');
-    throw(err);
-}
-
-export const getGameStatus = () => {
-    const err = Error('not implemented');
-    throw(err);
-}

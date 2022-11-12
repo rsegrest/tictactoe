@@ -43,7 +43,7 @@ table {
   width: 80%;
   height: 80vh;
 }
-td {
+.tictactoe-cell {
   font-size: 12rem;
   font-weight: bold;
 }

@@ -11,39 +11,10 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import '../../chatroom.css';
 
 const MessageSlate = ({
-  // messages,
+  messages = [],
 }) => {
-  const message = {
-    id: 123,
-    username: 'tricky',
-    content: 'hey now',
-  }
-  const msg2 = {
-    id: 124,
-    username: 'lara',
-    content: 'hey now',
-  }
-  const msg3 = {
-    id: 125,
-    username: 'charlotte',
-    content: 'hey now',
-  }
-  const msg4 = {
-    id: 126,
-    username: 'livvy',
-    content: '',
-  }
-  const msg5 = {
-    id: 127,
-    username: 'John Isaac',
-    content: 'I love Haddoween',
-  }
-  const msg6 = {
-    id: 128,
-    username: 'Rufus',
-    content: 'roo roo roo',
-  }
-  const messages = [message, msg2, msg3, msg4, msg5, msg6]
+  console.log('messages in MessageSlate: ' + JSON.stringify(messages));
+  
   return (
     <Container
       style={{

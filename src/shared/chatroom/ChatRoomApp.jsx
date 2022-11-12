@@ -1,7 +1,7 @@
-import { useState, useEffect } from 'react';
-import io from 'socket.io-client';
+// import { useState, useEffect } from 'react';
+
 // import Button from 'react-bootstrap/Button';
-import Container from 'react-bootstrap/Container';
+// import Container from 'react-bootstrap/Container';
 import Table from 'react-bootstrap/Table';
 // import Row from 'react-bootstrap/Row';
 // import Col from 'react-bootstrap/Col';
@@ -10,6 +10,7 @@ import GameNavbar from '../GameNavbar';
 import MessageSlate from './components/MessageSlate';
 import UserListDisplay from './components/UserListDisplay';
 import GameListDisplay from './components/GamesListDisplay';
+
 // import { getEmptyBoard } from './interface/GameSvrInterface';
 // import './App.css';
 // import './custom.scss';
@@ -22,25 +23,30 @@ import '../chatroom.css';
 // const socket = io("http://127.0.0.1:5000/chatroom")
 
   
-function ChatRoomApp() {
+function ChatRoomApp({
+  roomMessages,
+}) {
+  
   return (
     <>
       {/* <div style={{ display: 'flex', flexDirection: 'row' }}> */}
       <div style={{
 
       }}>
-        {/* <GameNavbar
+        <GameNavbar
           gameName={'Chat Room'}
           roomName={'THE_LOBBY'}
-        /> */}
+        />
         <Table>
           <tbody>
             <tr>
-            <td>
+              <td>
                 <UserListDisplay />
               </td>
               <td>
-                <MessageSlate />
+                <MessageSlate
+                  messages={roomMessages}
+                />
               </td>
               <td>
                 <GameListDisplay />

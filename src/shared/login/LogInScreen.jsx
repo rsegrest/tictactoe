@@ -5,20 +5,27 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import "@fontsource/cabin/400.css"
 import 'bootstrap/dist/css/bootstrap.min.css';
 import '../chatroom.css';
-import io from 'socket.io-client';
 
-import SendMessages from '../interface/SendMessages';
+import RoomTypes from '../constants/RoomTypes';
+// import SendMessages from '../interface/SendMessages';
 import { Form } from 'react-bootstrap';
 
-const socket = io("http://127.0.0.1:5000/")
 
   
-function LogInScreen() {
+function LogInScreen({
+  roomType,
+  setRoomType,
+  reqMsgs,
+  reqUsers,
+  sendUsername,
+  socket,
+}) {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
-  const sm = new SendMessages(socket);
+  // const sm = new SendMessages(socket);
   return (
     <>
+      <p>Room Type: {roomType}</p>
       <Table
         style={{
           width: '30rem',
@@ -51,7 +58,7 @@ function LogInScreen() {
                 <Form.Control
                   onChange={(e) => {
                     setUsername(e.target.value);
-                    console.log('username is now: ' + username);
+                    // console.log('username is now: ' + username);
                   }}
                   type="text"
                   placeholder="Enter Username"
@@ -83,7 +90,11 @@ function LogInScreen() {
               <Button
                 onClick={() => {
                   console.log('about to send username: ', username);
-                  sm.sendUsername(username);
+                  // sm.sendUsername(username);
+                  sendUsername(username);
+                  reqMsgs();
+                  reqUsers();
+                  setRoomType(RoomTypes.CHAT_ROOM);
                 }}
               >Register</Button>
             </td>

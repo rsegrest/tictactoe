@@ -1,4 +1,5 @@
 const RoomTypes = {
+    LOGIN: 'login',
     CHAT_ROOM: 'CHAT_ROOM',
     TICTACTOE: 'TICTACTOE',
     CONNECT_FOUR: 'CONNECT_FOUR',

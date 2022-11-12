@@ -1,6 +1,6 @@
 import { SpaceStates } from "../constants";
 // import { sendMove } from "../interface/GameSvrInterface";
-import '../styles/App.css';
+import '../styles/tictactoe.css';
 const XOSpace = ({
     state = SpaceStates.X,
     spacenum,
@@ -23,7 +23,7 @@ const XOSpace = ({
     if (spacenum > 5) { clName += " topborder"; }
     return (
         <td
-            className={clName}
+            className={`tictactoe-cell ${clName}`}
             style={{
                 width: '33vh',
                 height: '33vh',

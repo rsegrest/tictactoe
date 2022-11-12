@@ -43,10 +43,6 @@ table {
   width: 80%;
   height: 80vh;
 }
-td {
-  font-size: 12rem;
-  font-weight: bold;
-}
 .Debug-Output-Table {
   height: 1.1rem;
   width: 15vw;

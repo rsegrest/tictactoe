@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import io from 'socket.io-client';
 import C4Board from './components/C4Board';
 // import { getEmptyBoard } from './interface/GameSvrInterface';
-import './styles/App.css';
+import './styles/connectfour.css';
 import DebugDisplay  from './debug/DebugDisplay';
 import {
   SpaceStates,
