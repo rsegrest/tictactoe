@@ -4,9 +4,10 @@ import Col from 'react-bootstrap/Col';
 import '../../chatroom.css';
 
 const UserListDisplay = ({
-    users = ['Rick', 'Morty', 'Summer', 'Beth', 'Jerry'],
+    roomUsers,
 }) => {
     // const { users } = useContext(ChatContext);
+    console.log('roomUsers', roomUsers);
     return (
         <Container
             style={{
@@ -15,7 +16,7 @@ const UserListDisplay = ({
             }}
             className="user-list"
         >
-        {users.map((user) => (
+        {roomUsers.map((user) => (
             <Row key={user} className="user">
                 <Col>{user}</Col>
             </Row>

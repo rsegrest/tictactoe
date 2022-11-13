@@ -6,15 +6,15 @@ const getMessagesFromJSON = (json) => {
     // console.log('args');
     // console.log(json);
     const messageArray = json[0].messages;
-    console.log('messageArray, length:')
-    console.log(messageArray);
-    console.log(messageArray.length);
+    // console.log('messageArray, length:')
+    // console.log(messageArray);
+    // console.log(messageArray.length);
     const returnArray = [];
     for (let i = 0; i < messageArray.length; i++) {
-        console.log('looping ' + i);
+        // console.log('looping ' + i);
         const formattedMessage = messageArray[i].replaceAll("'", '"');
-        console.log('formattedMessage:');
-        console.log(formattedMessage)
+        // console.log('formattedMessage:');
+        // console.log(formattedMessage)
         const parsedMessage = JSON.parse(formattedMessage);
         console.log(parsedMessage)
         returnArray.push({
@@ -45,6 +45,7 @@ const MessageListeners = ({
     setIsConnected,
     joinRoom,
     setRoomMessages,
+    setRoomUsers,
     // setStatusMessage,
     // setXPlayer,
     // setOPlayer,
@@ -78,17 +79,18 @@ const MessageListeners = ({
     })
 
     socket.on('users', (message) => {
-        console.log('received user list');
-        console.log(message);
+        // console.log('received user list');
+        // console.log(message);
+        setRoomUsers(message);
     })
     socket.onAny((eventName, ...args) => {
         // console.log('***RX ANY');
         // console.log(eventName, args);
         if (eventName === 'messages') {
-            console.log('processing messages from server...')
+            // console.log('processing messages from server...')
             const messages = getMessagesFromJSON(args);
-            console.log('...completed processing')
-            console.log('messages:')
+            // console.log('...completed processing')
+            // console.log('messages:')
             setRoomMessages(messages);
             // console.log('RX messages');
             // console.log('args');
@@ -227,6 +229,6 @@ const MessageListeners = ({
     //   socket.off('update_game_status');
     //   socket.off('ack_start_game');
     };
-  }, [joinRoom, setIsConnected, setRoomMessages, socket]);
+  }, [joinRoom, setIsConnected, setRoomMessages, setRoomUsers, socket]);
 };
 export default MessageListeners;

@@ -19,6 +19,7 @@ const App = () => {
     const [ roomMessages, setRoomMessages ] = useState([]);
     const [ mySessionID, setMySessionID ] = useState(null);
     const [ myRoom, setMyRoom ] = useState(null);
+    const [ roomUsers, setRoomUsers ] = useState([]);
 
     const sm = new SendMessages(socket);
     const reqMsgs = sm.sendRequestMessages;
@@ -78,6 +79,8 @@ const App = () => {
                     setMyRoom={setMyRoom}
                     roomMessages={roomMessages}
                     setRoomMessages={setRoomMessages}
+                    roomUsers={roomUsers}
+                    setRoomUsers={setRoomUsers}
                 />
             </>
         );
