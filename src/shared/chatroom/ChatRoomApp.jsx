@@ -31,7 +31,7 @@ function ChatRoomApp({
   roomMessages,
   roomUsers,
 }) {
-  
+  console.log('roomUsers', roomUsers);
   return (
     <>
       {/* <div style={{ display: 'flex', flexDirection: 'row' }}> */}

@@ -28,6 +28,7 @@ const App = () => {
     console.log('initializing message listeners')
     MessageListeners({
         setRoomMessages,
+        setRoomUsers,
         socket,
         // setIsConnected,
         // joinRoom,

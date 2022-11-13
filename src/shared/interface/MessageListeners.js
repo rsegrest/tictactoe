@@ -79,13 +79,13 @@ const MessageListeners = ({
     })
 
     socket.on('users', (message) => {
-        // console.log('received user list');
+        console.log('received user list');
         // console.log(message);
-        setRoomUsers(message);
+        setRoomUsers(message.users);
     })
     socket.onAny((eventName, ...args) => {
-        // console.log('***RX ANY');
-        // console.log(eventName, args);
+        console.log('***RX ANY');
+        console.log(eventName, args);
         if (eventName === 'messages') {
             // console.log('processing messages from server...')
             const messages = getMessagesFromJSON(args);
