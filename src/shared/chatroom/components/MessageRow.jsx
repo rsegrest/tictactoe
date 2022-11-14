@@ -1,8 +1,9 @@
 import Badge from 'react-bootstrap/esm/Badge';
+import _uniqueId from 'lodash/uniqueId';
 
 const MessageRow = ({
     message,
-    thisUser
+    thisUser,
 }) => {
     const {
         userId,
@@ -20,6 +21,7 @@ const MessageRow = ({
     }
     return (
         <div
+            key={_uniqueId(timestamp)}
             className={msgclass}
             style={{
                 backgroundImage,

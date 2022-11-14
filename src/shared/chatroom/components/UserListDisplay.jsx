@@ -7,7 +7,7 @@ const UserListDisplay = ({
     roomUsers,
 }) => {
     // const { users } = useContext(ChatContext);
-    console.log('UserListDisplay : roomUsers', roomUsers);
+    // console.log('UserListDisplay : roomUsers', roomUsers);
     return (
         <Container
             style={{

@@ -1,10 +1,14 @@
+import { useState } from 'react';
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
 // import TextField from 'react-bootstrap/TextField';
 
 const MessageEntryField = ({
-    message,
+    // message,
+    sendChat,
+    thisUser,
 }) => {
+    const [message, setMessage] = useState('');
     return (
         <div
             style={{
@@ -35,8 +39,12 @@ const MessageEntryField = ({
                             width: '50rem',
                             display: 'inline',
                         }}
+                        value={message}
                         className='message-text'
-                        type="text" placeholder="Enter chat message" />
+                        type="text"
+                        placeholder="Enter chat message"
+                        onChange={(e) => setMessage(e.target.value)}
+                    />
                 </Form.Group>
             </Form>
             <div
@@ -52,6 +60,18 @@ const MessageEntryField = ({
                 className='message-text'
                 style={{
                     display: 'inline',
+                }}
+                onClick={() => {
+                    const aMsg = {
+                        content: message,
+                        username: thisUser,
+                    }
+                    console.log('aMsg:');
+                    console.log(aMsg);
+                    sendChat({
+                        content: message,
+                        username: thisUser
+                    });
                 }}
             >
                 Send chat

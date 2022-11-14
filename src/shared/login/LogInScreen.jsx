@@ -17,11 +17,14 @@ function LogInScreen({
   setRoomType,
   reqMsgs,
   reqUsers,
+  reqGames,
   sendUsername,
+  username,
+  setUsername,
   socket,
 }) {
-  const [username, setUsername] = useState("");
-  const [password, setPassword] = useState("");
+  const [tempUsername, setTempUsername] = useState("");
+  const [tempPassword, setTempPassword] = useState("");
   // const sm = new SendMessages(socket);
   return (
     <>
@@ -57,7 +60,7 @@ function LogInScreen({
               <Form>
                 <Form.Control
                   onChange={(e) => {
-                    setUsername(e.target.value);
+                    setTempUsername(e.target.value);
                     // console.log('username is now: ' + username);
                   }}
                   type="text"
@@ -78,7 +81,7 @@ function LogInScreen({
               Password
               <Form.Control
                   onChange={(e) => {
-                    setPassword(e.target.value);
+                    setTempPassword(e.target.value);
                   }}
                   type="password"
                   placeholder="Enter Password"
@@ -91,9 +94,11 @@ function LogInScreen({
                 onClick={() => {
                   console.log('about to send username: ', username);
                   // sm.sendUsername(username);
-                  sendUsername(username);
+                  setUsername(tempUsername);
+                  sendUsername(tempUsername);
                   reqMsgs();
                   reqUsers();
+                  reqGames();
                   setRoomType(RoomTypes.CHAT_ROOM);
                 }}
               >Register</Button>

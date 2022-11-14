@@ -30,8 +30,11 @@ import '../chatroom.css';
 function ChatRoomApp({
   roomMessages,
   roomUsers,
+  gamesAvailable,
+  username,
+  sendChat,
 }) {
-  console.log('roomUsers', roomUsers);
+  // console.log('roomUsers', roomUsers);
   return (
     <>
       {/* <div style={{ display: 'flex', flexDirection: 'row' }}> */}
@@ -41,6 +44,7 @@ function ChatRoomApp({
         <GameNavbar
           gameName={'Chat Room'}
           roomName={'THE_LOBBY'}
+          username={username}
         />
         <Table>
           <tbody>
@@ -53,10 +57,13 @@ function ChatRoomApp({
               <td>
                 <MessageSlate
                   messages={roomMessages}
+                  sendChat={sendChat}
                 />
               </td>
               <td>
-                <GameListDisplay />
+                <GameListDisplay
+                  games={gamesAvailable}
+                />
               </td>
             </tr>
           </tbody>

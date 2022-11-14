@@ -1,4 +1,4 @@
-// import Nav from 'react-bootstrap/Nav';
+import { useState } from 'react';
 import Navbar from 'react-bootstrap/Navbar';
 import Container from 'react-bootstrap/Container';
 import Form from 'react-bootstrap/Form';
@@ -11,9 +11,10 @@ const GameNavbar = ({
     username,
     setUsername,
     sendUsername,
-    playerInfo,
     gameRoom = 'THE_GAME_ROOM',
 }) => {
+    const [tempUsername, setTempUsername] = useState('');
+
     let statusColor = '#f00';
     if (isConnected) {
         statusColor = '#0f0';
@@ -94,7 +95,7 @@ const GameNavbar = ({
                         // border: '1px solid blue'
                     }}
                 >
-                    {!playerInfo ? (
+                    {!username ? (
                         <Form
                             style={{
                                 display: 'inline',
@@ -109,19 +110,27 @@ const GameNavbar = ({
                                 }}
                                 type="text"
                                 placeholder="Enter your name"
-                                id="username_field" onChange={(e) => setUsername(e.target.value)}
+                                id="username_field" onChange={(e) => setTempUsername(e.target.value)}
                             />
                             <Button
                                 style={{
                                     marginTop: '-0.2rem',
                                     display: 'inline',
                                 }}
-                                onClick={() => sendUsername(username)}
+                                onClick={() => sendUsername(tempUsername)}
                             >
                                 Submit
                             </Button>
                         </Form>
-                    ) : null}
+                    ) : (
+                        <span
+                            style={{
+                                color: 'white',
+                                fontWeight: 'bold'
+                            }}>
+                                {username}
+                        </span>
+                    )}
                 </div>
             </Container>
         </Navbar>

@@ -15,20 +15,25 @@ const App = () => {
 
     const socket = io("http://127.0.0.1:5000/");
 
+    const [ username, setUsername ] = useState("trickyRicky");
     const [ roomType, setRoomType ] = useState(RoomTypes.LOGIN);
     const [ roomMessages, setRoomMessages ] = useState([]);
     const [ mySessionID, setMySessionID ] = useState(null);
     const [ myRoom, setMyRoom ] = useState(null);
     const [ roomUsers, setRoomUsers ] = useState([]);
+    const [ gamesAvailable, setGamesAvailable ] = useState([])
 
     const sm = new SendMessages(socket);
     const reqMsgs = sm.sendRequestMessages;
     const reqUsers = sm.sendRequestUsersInRoom;
+    const reqGames = sm.sendRequestGamesAvailable;
+    const sendChat = sm.sendChatMessage;
+
     const sendUsername = sm.sendUsername;
-    console.log('initializing message listeners')
     MessageListeners({
         setRoomMessages,
         setRoomUsers,
+        setGamesAvailable,
         socket,
         // setIsConnected,
         // joinRoom,
@@ -66,7 +71,9 @@ const App = () => {
                     setRoomType={setRoomType}
                     reqMsgs={reqMsgs}
                     reqUsers={reqUsers}
+                    reqGames={reqGames}
                     sendUsername={sendUsername}
+                    setUsername={setUsername}
                 />
             </>
         );
@@ -82,6 +89,10 @@ const App = () => {
                     setRoomMessages={setRoomMessages}
                     roomUsers={roomUsers}
                     setRoomUsers={setRoomUsers}
+                    gamesAvailable={gamesAvailable}
+                    setGamesAvailable={setGamesAvailable}
+                    username={username}
+                    sendChat={sendChat}
                 />
             </>
         );

@@ -15,8 +15,8 @@ const DebugDisplay = ({
     joinRoom,
     startGame,
 }) => {
-    console.log('username: ' + username)
-    console.log('myside : ' + mySide)
+    // console.log('username: ' + username)
+    // console.log('myside : ' + mySide)
     return (
         <div className="Debug-Display">
             <table

@@ -3,7 +3,7 @@ import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 
 const GameListDisplay = ({
-    games = ['BlackJack', 'Connect Four', 'Keno', 'Roulette', 'Texas Hold\'em'],
+    games = [],
 }) => {
     // const { users } = useContext(ChatContext);
     return (

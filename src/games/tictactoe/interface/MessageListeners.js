@@ -27,33 +27,33 @@ const MessageListeners = ({
     });
 
     socket.on('pong', () => {
-      console.log('received pong!')
+      // console.log('received pong!')
     //   setLastPong(new Date().toISOString());
     });
 
     socket.on('update_msg', (message) => {
-      console.log('received message update')
-      console.log(message)
+      // console.log('received message update')
+      // console.log(message)
       setStatusMessage(message['msg'])
     })
 
     socket.on('ack_player_username', (message) => {
-      console.log('rx set player')
-      console.log(message);
+      // console.log('rx set player')
+      // console.log(message);
       const id = message['id'];
       const side = message['side'];
       const thisUser = message['username'];
-      console.log('side: ' + side);
-      console.log('thisUser : ' + thisUser);
+      // console.log('side: ' + side);
+      // console.log('thisUser : ' + thisUser);
       if (side === SpaceStates.X) {
-        console.log('setting xPlayer')
+        // console.log('setting xPlayer')
         setXPlayer(thisUser);
         if (thisUser === username) {
           setMySide(SpaceStates.X);
           setMyId(id)
         }
       } else if (side === SpaceStates.O) {
-        console.log('setting oPlayer')
+        // console.log('setting oPlayer')
         setOPlayer(thisUser);
         if (thisUser === username) {
           setMySide(SpaceStates.O);
@@ -63,32 +63,32 @@ const MessageListeners = ({
     })
 
     socket.on('board_update', (message) => {
-        console.log('rx board update')
-        console.log(message);
+        // console.log('rx board update')
+        // console.log(message);
         setBoardState(message['board'])
     })
 
     // NOT USED?
     socket.on('change_turn', (message) => {
-        console.log('rx change turn')
-        console.log(message);
+        // console.log('rx change turn')
+        // console.log(message);
         setTurn(message['turn'])
     })
 
     socket.on('my_response', (message) => {
-        console.log('rx my response')
-        console.log(message);
+        // console.log('rx my response')
+        // console.log(message);
     })
 
     socket.on('update_board', (message) => {
-        console.log('rx update board')
-        console.log(message);
+        // console.log('rx update board')
+        // console.log(message);
         setBoardState(message['board'])
     })
 
     socket.on('update_game_status', (message) => {
-        console.log('rx update game status')
-        console.log(message);
+        // console.log('rx update game status')
+        // console.log(message);
         const gameStatus = message['status'];
         setGameStatus(message['status'])
         if (gameStatus === GameStates.X_WON) {
@@ -107,8 +107,8 @@ const MessageListeners = ({
     })
     // NO LONGER NEEDED
     socket.on('ack_start_game', (message) => {
-      console.log('rx update game status')
-      console.log(message);
+      // console.log('rx update game status')
+      // console.log(message);
       setGameStatus(message['starting_game'])
   })
 

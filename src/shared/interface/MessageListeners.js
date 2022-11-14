@@ -1,22 +1,20 @@
 import { useEffect } from 'react';
 // import { SpaceStates, GameStates } from './constants';
 
+const getGamesFromJSON = (json) => {
+    const gameArray = json[0].games;
+    const returnArray = [];
+    for (let i = 0; i < gameArray.length; i++) {
+        returnArray.push(gameArray[i]);
+    }
+    return returnArray;
+}
 const getMessagesFromJSON = (json) => {
-    // console.log('RX messages');
-    // console.log('args');
-    // console.log(json);
     const messageArray = json[0].messages;
-    // console.log('messageArray, length:')
-    // console.log(messageArray);
-    // console.log(messageArray.length);
     const returnArray = [];
     for (let i = 0; i < messageArray.length; i++) {
-        // console.log('looping ' + i);
         const formattedMessage = messageArray[i].replaceAll("'", '"');
-        // console.log('formattedMessage:');
-        // console.log(formattedMessage)
         const parsedMessage = JSON.parse(formattedMessage);
-        console.log(parsedMessage)
         returnArray.push({
             userId: parsedMessage.user_id,
             userName: parsedMessage.user_name,
@@ -24,19 +22,6 @@ const getMessagesFromJSON = (json) => {
             timestamp: parsedMessage.timestamp,
         })
     }
-    // const formattedMessage = messageArray[0].replaceAll("'", '"');
-    // const parsedMessage = JSON.parse(formattedMessage);
-    // // console.log('messages:')
-    // // console.log(JSON.stringify(args[0].messages));
-    // console.log('messages[0]: (user_id, user_name, content, timestamp)')
-    // // const msgString = args[0].messages[0];
-    // // console.log('msgString:');
-    // // console.log(msgString);
-    // // console.log(typeof msgString);
-    // console.log(parsedMessage['user_id']);
-    // console.log(parsedMessage['user_name']);
-    // console.log(parsedMessage['content']);
-    // console.log(parsedMessage['timestamp']);
     return returnArray;
 }
 
@@ -46,84 +31,56 @@ const MessageListeners = ({
     joinRoom,
     setRoomMessages,
     setRoomUsers,
-    // setStatusMessage,
-    // setXPlayer,
-    // setOPlayer,
-    // setTurn,
-    // setGameStatus,
-    // setBoardState,
-    // setMySide,
-    // setMyId,
-    // username,
+    setGamesAvailable,
 }) => {
 
-    console.log('initializing shared / interface / message listeners');
   useEffect(() => {
-    console.log('useEffect in shared / interface / message listeners');
     socket.on('connect', () => {
-        console.log('socket connected');
+        // console.log('socket connected');
     //   setIsConnected(true);
     //   joinRoom(); // do this here or somewhere else?
     });
 
     socket.on('disconnect', () => {
-        console.log('socket disconnected');
+        // console.log('socket disconnected');
     //   setIsConnected(false);
     });
 
-    socket.on('messages', (
-        // message
-    ) => {
-        console.log('***RX MESSAGES');
+    // socket.on('messages', () => {
+        // console.log('***RX MESSAGES');
         // console.log(message);
-    })
+    // })
 
-    socket.on('users', (message) => {
-        console.log('received user list');
-        // console.log(message);
-        setRoomUsers(message.users);
-    })
+    // socket.on('users', (message) => {
+    //     console.log('*******RX USERS');
+    //     // console.log(message);
+    //     setRoomUsers(message.users);
+    // })
     socket.onAny((eventName, ...args) => {
-        console.log('***RX ANY');
-        console.log(eventName, args);
+        // if (args[0].data !== 'Connected') {
+        //     console.log('***RX ANY');
+        //     console.log(eventName, args);
+        // }
         if (eventName === 'messages') {
-            // console.log('processing messages from server...')
             const messages = getMessagesFromJSON(args);
-            // console.log('...completed processing')
-            // console.log('messages:')
             setRoomMessages(messages);
-            // console.log('RX messages');
-            // console.log('args');
+        }
+        if (eventName === 'games') {
+            // console.log('***RX GET GAMES AVAILABLE');
             // console.log(args);
-            // const messageArray = args[0].messages;
-            // const formattedMessage = messageArray[0].replaceAll("'", '"');
-            // const parsedMessage = JSON.parse(formattedMessage);
-            // // console.log('messages:')
-            // // console.log(JSON.stringify(args[0].messages));
-            // console.log('messages[0]: (user_id, user_name, content, timestamp)')
-            // // const msgString = args[0].messages[0];
-            // // console.log('msgString:');
-            // // console.log(msgString);
-            // // console.log(typeof msgString);
-            // console.log(parsedMessage['user_id']);
-            // console.log(parsedMessage['user_name']);
-            // console.log(parsedMessage['content']);
-            // console.log(parsedMessage['timestamp']);
-            
-            // const messageListJson = JSON.parse(args[0]);
-            // console.log('parsed messages');
-            // console.log(messageListJson.messages);
-
-
-            // const messageListLength = messageListJson.messages.length;
-            // console.log(`messageListLength: ${messageListLength}`);
-            // for (let i = 0; i < messageListLength; i++) {
-            //     const aMessage = messageListJson.messages[i];
-            //     console.log(`message ${i}: ${aMessage}`);
-            // }
-            // setRoomMessages(args[0]);
-
-
+            const games = getGamesFromJSON(args);
+            setGamesAvailable(games);
+        }
+        if (eventName === 'users') {
+            // console.log('***RX GET USERS IN ROOM');
+            // console.log(args);
+            setRoomUsers(args[0].users);
+        }
+        if (eventName === 'message_list_update') {
+            console.log('***RX MESSAGE LIST UPDATE');
+            // console.log(args);
+            const messages = getMessagesFromJSON(args);
+            setRoomMessages(messages);
         }
       });
 
@@ -215,20 +172,12 @@ const MessageListeners = ({
 //   )
 
     return () => {
-        socket.off('messages')
-        socket.off('user_list');
-    //   socket.off('connect');
-    //   socket.off('disconnect');
-    //   socket.off('pong');
-    //   socket.off('update_msg');
-    //   socket.off('ack_player_username');
-    //   socket.off('board_update');
-    //   socket.off('change_turn');
-    //   socket.off('my_response');
-    //   socket.off('update_board');
-    //   socket.off('update_game_status');
-    //   socket.off('ack_start_game');
+        socket.off('connect');
+        socket.off('disconnect');
+        // socket.off('messages')
+        // socket.off('users');
+        // socket.off('games');
     };
-  }, [joinRoom, setIsConnected, setRoomMessages, setRoomUsers, socket]);
+  }, [joinRoom, setGamesAvailable, setIsConnected, setRoomMessages, setRoomUsers, socket]);
 };
 export default MessageListeners;

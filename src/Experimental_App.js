@@ -26,13 +26,13 @@ function App() {
     });
 
     socket.on('pong', () => {
-      console.log('received pong!')
+      // console.log('received pong!')
       setLastPong(new Date().toISOString());
     });
 
     socket.on('update_msg', (message) => {
-      console.log('received message update')
-      console.log(message)
+      // console.log('received message update')
+      // console.log(message)
     })
 
     return () => {
