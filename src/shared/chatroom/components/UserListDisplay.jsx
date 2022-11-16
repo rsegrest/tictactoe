@@ -1,6 +1,7 @@
 import Container from 'react-bootstrap/Container';
-import Row from 'react-bootstrap/Row';
-import Col from 'react-bootstrap/Col';
+// import Row from 'react-bootstrap/Row';
+// import Col from 'react-bootstrap/Col';
+import ListRow from './ListRow';
 import '../../chatroom.css';
 
 const UserListDisplay = ({
@@ -17,9 +18,7 @@ const UserListDisplay = ({
             className="user-list"
         >
         {roomUsers.map((user) => (
-            <Row key={user} className="user">
-                <Col>{user}</Col>
-            </Row>
+            <ListRow content={user} />
         ))}
         </Container>
     );
