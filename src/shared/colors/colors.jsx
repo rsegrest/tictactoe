@@ -1,13 +1,15 @@
+export const SET_NAMES = {
+    WOODGRAIN: 'WOODGRAIN',
+}
 export const COLOR_NAMES = {
     WOODGRAIN: {
-        WALNUT: 'walnut',
-        MAHOGANY: 'mahogany',
-        CHERRY: 'cherry',
-        LEATHER: 'leather',
-        SAND: 'sand',
+        WALNUT: 'WALNUT',
+        MAHOGANY: 'MAHOGANY',
+        CHERRY: 'CHERRY',
+        LEATHER: 'LEATHER',
+        SAND: 'SAND',
     }
 }
-
 export const getHexColor = (colorName) => {
     switch(colorName) {
         case COLOR_NAMES.WOODGRAIN.WALNUT:
@@ -22,6 +24,23 @@ export const getHexColor = (colorName) => {
             return '#bd9476';
         default:
             return '#888888'; // gray
+    }
+}
+// Make sure that the text is readable to go with the background (sent in argument)
+export const getFGColorForBG = (colorName) => {
+    switch(colorName) {
+        case COLOR_NAMES.WOODGRAIN.WALNUT:
+            return 'white';
+        case COLOR_NAMES.WOODGRAIN.MAHOGANY:
+            return 'white';
+        case COLOR_NAMES.WOODGRAIN.LEATHER:
+            return 'black';
+        case COLOR_NAMES.WOODGRAIN.CHERRY:
+            return 'black';
+        case COLOR_NAMES.WOODGRAIN.SAND:
+            return 'black';
+        default:
+            return 'black'; // gray
     }
 }
 export const getRGBColor = (colorName) => {
@@ -40,4 +59,49 @@ export const getRGBColor = (colorName) => {
             return (128,128,128); // gray
     }
 }
+export const cycleColor = ((setName=SET_NAMES.WOODGRAIN) => {
+    let count = 0;
+    const modifyCount = (mod) => {
+        count += mod;
+    }
+    // const advanceColor = () => {
+    //     console.log('color set: ' + setName);
+    //     console.log(COLOR_NAMES.setName);
+    //     let numColors = Object.keys(COLOR_NAMES[setName]).length;
+    //     let index = count % numColors;
+    //     let key = Object.keys(COLOR_NAMES[setName])[index];
+    //     console.log('cycleColor: key', key);
+    //     count++;
+    //     return key;    
+    // }
+    // const k = advanceColor();
+    return {
+        reset() {
+            modifyCount(-count)
+        },
+        increment() {
+            modifyCount(1)
+        },
+        decrement() {
+            modifyCount(-1)
+        },
+        getNextIndex() {
+            this.increment()
+            return count;
+        },
+        getNextColorSet() {
+            let numColors = Object.keys(COLOR_NAMES[setName]).length;
+            let index = count % numColors;
+            let key = Object.keys(COLOR_NAMES[setName])[index];
+            let hexColor = getHexColor(key);
+            let fgColor = getFGColorForBG(key);
+            this.increment();
+            return [hexColor, fgColor];
+        }
+    };
+    // return getHexColor(COLOR_NAMES[setName][key]);
+})();
+// export const getColor = () => {
+//     return (128,128,128);
+// }
 export default COLOR_NAMES;
