@@ -9,7 +9,6 @@ const ListRow = ({
     colorSet,
     borderColor,
 }) => {
-    // const content = random(false);
     return (
         <Row
             style={{
@@ -24,7 +23,9 @@ const ListRow = ({
                     backgroundColor: colorSet[0],
                     color: colorSet[1],
                 }}
-            >{content}</Col>
+            >
+                {content}
+            </Col>
         </Row>
     )
 }

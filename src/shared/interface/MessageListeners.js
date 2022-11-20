@@ -57,11 +57,14 @@ const MessageListeners = ({
     //     setRoomUsers(message.users);
     // })
     socket.onAny((eventName, ...args) => {
-        // if (args[0].data !== 'Connected') {
-        //     console.log('***RX ANY');
-        //     console.log(eventName, args);
-        // }
-        if (eventName === 'messages') {
+        if (args[0].data !== 'Connected') {
+            console.log('***RX ANY');
+            console.log(eventName, args);
+        }
+        if (
+            (eventName === 'messages')
+            || (eventName === 'message_list_update')) {
+            console.log('***RX MESSAGES');
             const messages = getMessagesFromJSON(args);
             setRoomMessages(messages);
         }

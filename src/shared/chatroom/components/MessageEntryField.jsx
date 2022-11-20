@@ -20,6 +20,7 @@ const MessageEntryField = ({
                 style={{
                     display: 'inline',
                 }}
+                onSubmit={(e) => e.preventDefault()}
             >
                 <Form.Group
                     style={{
@@ -44,6 +45,17 @@ const MessageEntryField = ({
                         type="text"
                         placeholder="Enter chat message"
                         onChange={(e) => setMessage(e.target.value)}
+                        onKeyDown={(e) => {
+                            // e.preventDefault();
+                            console.log('e.key: ', JSON.stringify(e.key));
+                            if (e.key === 'Enter') {
+                                setMessage('');
+                                sendChat({
+                                    content: message,
+                                    username: thisUser
+                                });
+                            }
+                        }}
                     />
                 </Form.Group>
             </Form>
@@ -68,6 +80,7 @@ const MessageEntryField = ({
                     }
                     console.log('aMsg:');
                     console.log(aMsg);
+                    setMessage('');
                     sendChat({
                         content: message,
                         username: thisUser

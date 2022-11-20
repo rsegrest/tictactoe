@@ -26,6 +26,16 @@ function LogInScreen({
   const [tempUsername, setTempUsername] = useState("");
   const [tempPassword, setTempPassword] = useState("");
   // const sm = new SendMessages(socket);
+  const handleUsernameChange = (e) => {
+    console.log('about to send username: ', username);
+    // sm.sendUsername(username);
+    setUsername(tempUsername);
+    sendUsername(tempUsername);
+    reqMsgs();
+    reqUsers();
+    reqGames();
+    setRoomType(RoomTypes.CHAT_ROOM);
+  }
   return (
     <>
       <p>Room Type: {roomType}</p>
@@ -57,11 +67,20 @@ function LogInScreen({
               }}
             >
               Username
-              <Form>
+              <Form
+                onSubmit={(e) => e.preventDefault()}
+              >
                 <Form.Control
                   onChange={(e) => {
                     setTempUsername(e.target.value);
                     // console.log('username is now: ' + username);
+                  }}
+                  onKeyDown={(e) => {
+                    // e.preventDefault();
+                    console.log('e.key: ', JSON.stringify(e.key));
+                    if (e.key === 'Enter') {
+                      handleUsernameChange(e);
+                    }
                   }}
                   type="text"
                   placeholder="Enter Username"
@@ -91,15 +110,16 @@ function LogInScreen({
           <tr>
             <td>
               <Button
-                onClick={() => {
-                  console.log('about to send username: ', username);
-                  // sm.sendUsername(username);
-                  setUsername(tempUsername);
-                  sendUsername(tempUsername);
-                  reqMsgs();
-                  reqUsers();
-                  reqGames();
-                  setRoomType(RoomTypes.CHAT_ROOM);
+                onClick={(e) => {
+                  handleUsernameChange(e);
+                  // console.log('about to send username: ', username);
+                  // // sm.sendUsername(username);
+                  // setUsername(tempUsername);
+                  // sendUsername(tempUsername);
+                  // reqMsgs();
+                  // reqUsers();
+                  // reqGames();
+                  // setRoomType(RoomTypes.CHAT_ROOM);
                 }}
               >Register</Button>
             </td>
